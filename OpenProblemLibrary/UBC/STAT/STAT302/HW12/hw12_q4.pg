@@ -143,7 +143,7 @@ $BR
 $BR
 $BCENTER
 \(
-P\left(\frac{\bar{X} - \mu}{\sigma/10} > \frac{x - \mu}{\sigma/10} \right) = 1-P\left( Z - \frac{x - \mu}{\sigma/10} \right)
+P\left(\frac{\bar{X} - \mu}{\sigma/10} > \frac{x - \mu}{\sigma/10} \right) = 1-P\left( Z \leq \frac{x - \mu}{\sigma/10} \right)
 \)
 $ECENTER
 $BR

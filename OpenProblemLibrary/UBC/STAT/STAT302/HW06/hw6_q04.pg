@@ -1,0 +1,22 @@
+##DESCRIPTION
+##  This is just a skeleton - it randomly chooses one of several similar problems 
+##ENDDESCRIPTION
+
+##KEYWORDS('random', 'template')
+
+## Date('2013/05/06')
+## Author('Jonathan Baik')
+## Institution('UBC')
+
+
+########################################################################
+DOCUMENT();
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+);
+$choice = random(0, 2, 1);
+@problems=('w16stat302/setHW06/hw6_q04_a.pg', 'w16stat302/setHW06/hw6_q04_b.pg', 'w16stat302/setHW06/hw6_q04_c.pg');
+$problem = $problems[$choice];
+
+includePGproblem($problem);
+ENDDOCUMENT();
