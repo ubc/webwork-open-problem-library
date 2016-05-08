@@ -92,7 +92,7 @@ END_TEXT
 ANS( num_cmp($data[0], tol=> 0.02) );
 ANS( num_cmp($data[1], tol=> 0.02) );
 ANS( num_cmp($data[2], tol=> 0.1) );
-ANS( num_cmp($data[3], tol=> 0.1) );
+ANS( num_cmp($data[3], tol=> 0.05) );
 
 
 #########################################################
@@ -171,7 +171,7 @@ t\right) +$beta Z\left( t-1\right) ,\right.  \\
 where use has been made of the results in (a) and (b). Clearly then
 \[
 \begin{eqnarray*}
-\gamma \left( 1\right)  &=&\frac{$sigma^{2}\left( $alpha+$alpha\times $beta \times t\left( $alpha+$beta\right) +$beta\right) }{\left( 1-$alpha^{2}\right) } \\
+\gamma \left( 1\right)  &=&\frac{$sigma^{2}\left( $alpha+$alpha\times $beta \times \left( $alpha+$beta\right) +$beta\right) }{\left( 1-$alpha^{2}\right) } \\
 &=& $data[2].
 \end{eqnarray*}
 \]
@@ -190,7 +190,7 @@ t-k\right) +$beta Z\left( t-k-1\right) \right)  \\
 &=&$alpha\gamma \left( k-1\right),
 \end{eqnarray*}
 \]
-as for an \(\text{AR}(1)\) process. So the acf \(\rho(k)\)$ is determined, dividing \(\gamma(k) \) by \(\gamma(0) \) for each k.
+as for an \(\text{AR}(1)\) process. So the acf \(\rho(k)\) is determined, dividing \(\gamma(k) \) by \(\gamma(0) \) for each k.
 For example,
 \[
 \begin{eqnarray*}

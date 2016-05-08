@@ -37,7 +37,21 @@ rserve_eval("set.seed($seed)");
 my ($remote_file, @problem_data) = rserve_eval(<<CODE);
 # this is R code
 x <- round(runif(1, min=0, max=4),0)
-lynx <- ts(lynx, start = c(1821, 1934), frequency = 1)
+lynx<-c(269,  321,  585,  871, 1475, 2821, 3928, 5943, 4950, 2577,  523,   98,  184,  279,  409, 
+        2285, 2685, 3409, 1824,  409,  151,
+ 45,   68,  213,  546, 1033, 2129, 2536,  957,  361,  377,  225,  360,  731, 1638, 
+ 2725, 2871, 2119,  684,  299,  236,  245,
+ 552, 1623, 3311, 6721, 4254,  687,  255,  473,  358,  784, 1594, 1676, 2251, 1426,  756,  299,  
+ 201,  229,  469,  736, 2042,
+ 2811, 4431, 2511,  389,   73,   39,   49,   59,  188,  377, 1292, 4031, 3495,  587,  105,  
+ 153,  387,  758, 1307, 3465, 6991,
+ 6313, 3794, 1836,  345,  382,  808, 
+ 1388, 2713, 3800, 3091, 2985, 3790,  674,   81,   80,  
+ 108,  229,  399, 1132, 2432, 3574,
+ 2935, 1537,  529,  485,  662, 1000, 
+ 1590, 2657, 3396)
+
+lynx <- ts(lynx, start = c(1821, 1), frequency = 1)
 num = length(lynx)
 lynx1 <- lynx[x:num]
 loglynx <- log(lynx1)
@@ -51,8 +65,6 @@ CODE
 
 
 @data = rserve_eval('
-
-
 # b)
 spec1 <- spec.pgram(loglynx)
 ans.b = spec1$freq[which.max(spec1$spec)]
@@ -70,12 +82,14 @@ n1= x + 1821
 n2 = n + 2;
 c(ans.b, ans.c, ans.d, n1, n, n2)
 ');
+
 my $local_file = rserve_get_file($remote_file);
 ($local_url = $local_file) =~ s|$tempDirectory|$tempURL|;
 
-$n1 = $data[3];
-$n = $data[4];
-$n2 = $data[5];
+$n1 = @data[3];
+$n = @data[4];
+$n2 = @data[5];
+
 
 $mp = MultiAnswer(10)->with(
         singleResult => 0,
@@ -86,7 +100,9 @@ $mp = MultiAnswer(10)->with(
         },
     );
 
-
+@q1=rserve_eval('
+q1=10
+');
 
 #########################################################
 ## Main Text: where all text goes (Required)
@@ -95,44 +111,46 @@ Context()->texStrings;
 BEGIN_TEXT
 $BBOLD LINK for DATA SET (\{ htmlLink($local_url, "Download the csv file here") \}) $EBOLD
 $BR
-The data file \({lynx}\) linked below gives annual numbers of lynx trappings for $n1 to 1934 in the MacKenzie river area. Use the \(\log\) function in R to transform to the logarithms of the original counts. Plot the new time series.
+The data file \({lynx}\) linked above gives annual numbers of lynx trappings for $n1 to 1934 in the MacKenzie river area. Use the \(\log\) function in R to transform to the logarithms of the original counts. Plot the new time series.
 $BR
 $BR
-$BBOLD Part (a)  $EBOLD
+
+$BBOLD Part (a) $EBOLD
+The time series exhibits a clear cyclical component. Based on the
+plot, make an estimate of the period of this cyclical effect, giving
+your answer to the nearest whole year.   
 $BR
-The time series exhibits a clear cyclical component. Based on the plot, make an estimate of the period of this cyclical effect, giving your answer to the nearest whole year.
-$BR
-\{$mp->ans_rule(7)\}
+\{ans_rule(7)\}
 $BR
 $BR
+
 $BBOLD Part (b) $EBOLD
 Use the R command \({spec.pgram}\) to compute and plot the raw periodogram of the time series. At which frequency does the raw periodogram attain its maximum value? Give your answer to three decimal places. Note that the command \({which.max }\) may help here.
 $BR
 \{ans_rule(7)\}
 $BR
 $BR
+
 $BBOLD Part (c) $EBOLD
 To improve the estimate of the underlying spectrum, we can smooth the raw periodogram. The option \({spans}\) applies one or more (Daniell) smoother(s) to the periodogram. Smooth your periodogram by setting \({spans=c($n,$n2)}\), which applies two filters in turn. At which frequency does the smoothed periodogram attain its maximum value? Give your answer to three decimal places.
 $BR
 \{ans_rule(7)\}
 $BR
 $BR
+
 $BBOLD Part (d) $EBOLD
 Using your smoothed periodogram, provide an estimate of the period of the underlying cyclical component. Give your answer to two decimal places.
 $BR
 \{ans_rule(7)\}
-$BR
-$BR
-
 
 END_TEXT
 
 #########################################################
 ## Answers evaluation (Required)
-ANS( $mp->cmp()  ); 
-ANS( num_cmp($data[0], tol=> 0.01) );
-ANS( num_cmp($data[1], tol=> 0.01) );
-ANS( num_cmp($data[2], tol=> 0.1) );
+ANS( num_cmp(@q1[0], tol=> 1.01) );
+ANS( num_cmp(@data[0], tol=> 0.01) );
+ANS( num_cmp(@data[1], tol=> 0.01) );
+ANS( num_cmp(@data[2], tol=> 0.1) );
 
 #########################################################
 ## Solution (Optional but recommended)
@@ -175,3 +193,4 @@ $BR
 END_SOLUTION
 
 ENDDOCUMENT();
+
