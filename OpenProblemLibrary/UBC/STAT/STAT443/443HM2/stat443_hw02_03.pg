@@ -35,8 +35,8 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 rserve_eval("set.seed($seed)");
 ## do not need to download data
 @data = rserve_eval('
-alpha1 <- runif(1, min=0.05, max=1.95)
-alpha2 <- runif(1, min=-0.95, max=1-alpha1)
+alpha1 <- runif(1, min=1.05, max=1.95)
+alpha2 <- runif(1, min=-0.98, max=1-alpha1)
 alpha1 <- round(alpha1, 2)
 alpha2 <- round(alpha2, 2)
 
