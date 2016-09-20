@@ -1,0 +1,88 @@
+#########################################################
+##KEYWORDS('Combinatorics'; 'find number of permutations of a subset of objects both with and without replacement')
+# DESCRIPTION
+## DBsubject('Combinatorics')
+## DBchapter('Counting')
+## DBsection('Permutations')
+## Date('2015/07/05')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('3')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@x=rserve_eval('
+x <- sample(3:7, 1)
+');
+
+@q1=rserve_eval('
+factorial(9)/factorial(9-x)
+');
+
+@q2=rserve_eval('
+9^x
+');
+
+$q1ans = @q1[0];
+$q2ans = @q2[0];
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+Consider forming @x[0] digit numbers from the digits 1, 2, 3, 4, 5, 6, 7, 8, and 9. Answer the following questions, rounding your answers to two decimal places.
+$BR
+$BR
+$BBOLD(a) $EBOLD How many numbers can be formed if repetitions are not allowed? \{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(b) $EBOLD  How many numbers can be formed if repetitions are allowed?  \{  ans_rule(7) \} 
+END_TEXT
+
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans) );
+ANS( num_cmp($q2ans) );
+
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+$BBOLD (a) $EBOLD Consider the @x[0] digits to be selected. The first may be selected in 9 ways. The second may be selected in 8 ways, so the  first two digits can chosen in 72 ways. Continuing in this fashion, the @x[0] digits can be found in
+\( 9 \times 8 \times \ldots \times (10-@x[0])=@q1[0] \) ways. 
+$BR
+$BR
+$BBOLD (b) $EBOLD When replacement is allowed, we have 9 choices for each digit,
+hence the number of choices is \(9^@x[0]= @q2[0]\). 
+END_SOLUTION
+ENDDOCUMENT();

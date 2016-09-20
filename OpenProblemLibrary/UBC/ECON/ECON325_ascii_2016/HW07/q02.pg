@@ -1,0 +1,137 @@
+#########################################################
+##KEYWORDS( 'Inference'; 'estimation of mean') 
+# DESCRIPTION
+## DBsubject('Statistics')
+## DBchapter('Point estimation')
+## DBsection('Efficiency')
+## Date('2015/07/28')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('3')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@a=rserve_eval('
+a <- round(runif(1, min=0.4, max=0.6),2)
+');
+
+
+@am=rserve_eval('
+1-a
+');
+
+
+@q1=rserve_eval('
+re1<-1/( a^2 + (1-a)^2 )
+round(re1, 2)
+');
+
+$q1ans =@q1[0];
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+Let \(X\) and \(Y\) be observations taken at random from a distribution with mean \( \mu \)  and variance \( \sigma^2 \). Assume that \(X\) and \(Y\) are independently distributed. Consider the following two point estimators of the population mean \( \mu \):
+$BR
+$BR
+$BBOLD (1) $EBOLD 
+$BCENTER
+\(
+X   
+\)
+$ECENTER
+$BR
+$BBOLD (2) $EBOLD 
+$BCENTER
+\(
+@a[0] X +@am[0] Y    
+\)
+$ECENTER
+$BR
+$BR
+You should be able to confirm that both estimators are unbiased. Find the relative efficiency, defined here using the larger variance in the numerator, rounding your answer to two decimal places. \{  ans_rule(7) \} 
+END_TEXT
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.02) );
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+We define the relative efficiency of two estimators, say \( \hat{\theta}_1 \) and \( \hat{\theta}_2 \), as 
+$BR
+$BCENTER
+\(
+\frac{\text{Var} (\hat{\theta}_1)  }{ \text{Var} (\hat{\theta}_2)  }
+\)
+$ECENTER
+$BR
+when \( \text{Var} (\hat{\theta}_1) > \text{Var} (\hat{\theta}_2)  \), and the reciprocal of the ratio otherwise. 
+$BR
+$BR
+For estimator (1),
+$BR
+$BCENTER
+\begin{align} 
+Var (X) &= \sigma^2.  
+\end{align}
+$ECENTER
+$BR
+as \(X\) is a single observation from a distribution with variance  \(  \sigma^2\). For estimator (2), 
+$BR
+$BR
+$BCENTER
+\begin{align} 
+Var ( @a[0] X + @am[0] Y  ) &= @a[0]^2 Var(X) + @am[0]^2 Var(Y) \\
+&= @a[0]^2 \sigma^2 + @am[0]^2 \sigma^2 \\
+&= \sigma^2 (@a[0]^2 +  @am[0]^2 ). 
+\end{align}
+$ECENTER
+$BR
+$BR
+We see that the first estimator has the greater variance, and so the relative efficiency is
+$BR
+$BR
+$BCENTER
+\begin{align} 
+\frac{1}{ @a[0]^2 + @am[0]^2 } &= $q1ans. 
+\end{align}
+$ECENTER
+$BR
+$BR
+
+
+END_SOLUTION
+ENDDOCUMENT();
