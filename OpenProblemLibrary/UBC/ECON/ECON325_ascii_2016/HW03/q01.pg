@@ -1,0 +1,88 @@
+#########################################################
+##KEYWORDS('Probability', 'relative frequency')
+# DESCRIPTION
+## DBsubject('Probability')
+## DBchapter('Sample Space')
+## DBsection('Probability: direct computation, inclusion/exclusion')
+## Date('2015/07/01')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('2')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@dat=rserve_eval('
+x <- round(runif(1, min=500, max=900),0)
+');
+
+@dat_pro=rserve_eval('
+x/1000
+');
+
+@dat_prominusone=rserve_eval('
+1-x/1000
+');
+
+$q1ans = @dat_pro[0];
+$q2ans = @dat_prominusone[0];
+
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+Statistics Canada questions 1000 businesses about their growth plans for the next quarter. Responses are received by @dat[0] of the businesses. Provide answers to the following to three decimal places.
+$BR
+$BR
+$BBOLD(a) $EBOLD Find the probability that a business chosen at random from the 1000 will submit a response to the survey. \{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(b) $EBOLD Find the probability that a business chosen at random from the 1000 will not submit a response to the survey.  \{  ans_rule(7) \} 
+END_TEXT
+
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.01) );
+ANS( num_cmp($q2ans, tol=> 0.01) );
+
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+$BBOLD (a) $EBOLD The probability in question is the number who responded divided by the number polled, this being @dat_pro[0]. 
+$BR
+$BR
+$BBOLD (b) $EBOLD The probability in question is the number who did not respond divided by the number polled, this being @dat_prominusone[0]. 
+
+END_SOLUTION
+ENDDOCUMENT();

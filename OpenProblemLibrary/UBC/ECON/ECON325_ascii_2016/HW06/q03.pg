@@ -1,0 +1,134 @@
+#########################################################
+##KEYWORDS('Inference'; 'sampling distribution of sample mean,') 
+# DESCRIPTION
+## DBsubject('Statistics')
+## DBchapter('sampling distribution')
+## DBsection('Sample mean')
+## Date('2015/07/11')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('3')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@m=rserve_eval('
+m <- sample(100:125, 1)
+');
+
+@n=rserve_eval('
+n <- sample(1:4, 1)
+');
+
+@diff=rserve_eval('
+diff=m-n
+');
+
+@s=rserve_eval('
+s <- sample(5:10, 1)
+');
+
+@n1=rserve_eval('
+n1 <- sample(5:11, 1)
+');
+
+@n2=rserve_eval('
+n2 <- sample(12:17, 1)
+');
+
+@q1=rserve_eval('
+q1=pnorm( -n/(s/sqrt(n1)))
+round(q1 , 2)
+');
+
+@q2=rserve_eval('
+q2= pnorm( -n/(s/sqrt(n2)))
+round(q2,  2)
+');
+
+$q1ans =@q1[0];
+$q2ans =@q2[0];
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+Suppose that a random sample is drawn from a population with mean \(@m[0]\) and standard deviation \(@s[0]\). The population distribution is assumed to be normal. Answer the following questions, rounding your answers to two decimal places where appropriate.
+$BR
+$BR
+$BBOLD(a) $EBOLD Find the probability that the sample mean will be less than \(  @diff[0]\), if a sample of \(@n1[0]\) observations is taken. \{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(b) $EBOLD Find the probability that the sample mean will be less than \(  @diff[0]\), if a sample of \(@n2[0]\) observations is taken. \{  ans_rule(7) \} 
+END_TEXT
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.02) );
+ANS( num_cmp($q2ans, tol=> 0.02) );
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+Let \( \bar{X}\) denotes the sample mean, then since the population is normal we know that \( \bar{X}\) follows the normal distribution with mean \(@m[0]\) and standard deviation \( @s[0] / \sqrt{n} \), where \(n\) is the sample size. 
+$BR
+$BR
+$BBOLD (a) $EBOLD For \( n= @n1[0] \) 
+$BR
+$BR
+$BCENTER
+\( 
+P(\bar{X}< @m[0] - @n[0] )  = P(\bar{X} - @m[0] < - @n[0] ) =
+
+P(  \frac{\bar{X} -  @m[0] }{  @s[0] / \sqrt{@n1[0]} }  < -\frac{@n[0] }{  @s[0] / \sqrt{@n1[0]} } ) = P( Z < -\frac{@n[0] }{  @s[0] / \sqrt{@n1[0]} }  )
+\)
+$ECENTER
+$BR
+where \(Z\) is a standard normal variable. From tables or otherwise, this probability is $q1ans. 
+$BR
+$BR
+
+$BBOLD (b) $EBOLD For \( n= @n2[0] \) 
+$BR
+$BR
+$BCENTER
+\( 
+P(\bar{X}< @m[0] - @n[0] )  = P(\bar{X} - @m[0] < - @n[0] ) =
+
+P(  \frac{\bar{X} -  @m[0] }{  @s[0] / \sqrt{@n2[0]} }  < -\frac{@n[0] }{  @s[0] / \sqrt{@n2[0]} } ) = P( Z < -\frac{@n[0] }{  @s[0] / \sqrt{@n2[0]} }  )
+\)
+$ECENTER
+$BR
+where \(Z\) is a standard normal variable. From tables or otherwise, this probability is $q2ans. Recall that the sampling distribution of \( \bar{X} \) gets tighter about the population mean as the sample size increases. 
+
+END_SOLUTION
+ENDDOCUMENT();

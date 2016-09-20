@@ -1,0 +1,91 @@
+#########################################################
+##KEYWORDS( 'Probability'; 'binomial distribution') 
+# DESCRIPTION
+## DBsubject('Probability')
+## DBchapter('Discrete distributions')
+## DBsection('Binomial')
+## Date('2015/08/20')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('3')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@n=rserve_eval('
+n <- sample(25:35, 1)
+');
+
+
+@p=rserve_eval('
+p <- sample(25:35, 1)
+');
+
+@q1=rserve_eval('
+re1= 1-pbinom(n,size=100, prob=p/100)
+round(re1, 3)
+');
+
+$q1ans =@q1[0];
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+Suppose that on a certain tropical island, the weather is so variable
+that the occurrence of rain on any day is independent of whether or
+not rain has fallen on previous days. Suppose it rains on @p[0]% of the
+days. Find the probability that, during a 100-day period when the
+tourist trade is at its peak, the number of rainy days is more than @n[0].
+Round off your answer to three decimal places. \{  ans_rule(7) \} 
+END_TEXT
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.02) );
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+Let \(X\) denote the number of days per year that it rains on
+the island. Then \(X\) is Binomially distributed with 100 trials and the
+probability of rain at each being \(@p[0]/100 \). Then we require
+$BR
+$BCENTER
+\(
+P(X > @n[0]) = 1- P(X \leq @n[0] )
+\)
+$ECENTER
+$BR
+which via tables or otherwise is $q1ans.   
+END_SOLUTION
+ENDDOCUMENT();
