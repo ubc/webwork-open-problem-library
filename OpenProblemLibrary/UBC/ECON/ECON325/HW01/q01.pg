@@ -1,0 +1,117 @@
+##DESCRIPTION
+##  Algebra problem: true or false for inequality 
+##ENDDESCRIPTION
+
+##KEYWORDS('Arithmetic', 'addition', 'multiplication', 'add two rational numbers', 'rounding to two decimal places', 'multiply two integers")
+## DBsubject('Arithmetic')
+## DBchapter('Decimals')
+## DBsection('Multiple operations')
+## Date('2015/06/07')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('1')
+
+
+########################################################################
+
+DOCUMENT();      
+
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+####x
+@xPerl = rserve_eval('
+x <- round(runif(1, min=3, max=9), 3)
+');
+$xPerl=$xPerl[0];
+
+#####y
+@yPerl = rserve_eval('
+y <- round(runif(1, min=30, max=45), 3)
+');
+$yPerl=$yPerl[0];
+
+@q1ANS=rserve_eval('
+round(x+y,2)
+');
+
+$q1ans = $q1ANS[0];
+
+####n
+@nPerl = rserve_eval('
+n <- round(runif(1, min=2, max=8), 0)
+');
+$nPerl=$nPerl[0];
+
+#####m
+@mPerl = rserve_eval('
+m <- round(runif(1, min=9, max=12), 0)
+');
+$mPerl=$mPerl[0];
+
+@q2ANS=rserve_eval('
+n*m
+');
+$q2ans = $q2ANS[0];
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+
+Give answers to the following to two decimal places:
+$BR
+$BR
+$BBOLD (a) $EBOLD Find the sum of $xPerl and $yPerl. 
+$BR
+Answer:    \{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD (b) $EBOLD Find the product of $nPerl and $mPerl. 
+$BR
+Answer:    \{  ans_rule(7) \} 
+
+END_TEXT
+
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.01) );
+ANS( num_cmp($q2ans) );
+
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+(a) The sum is $q1ans. 
+$BR
+(b) The product is $q2ans.   
+END_SOLUTION
+ENDDOCUMENT();
