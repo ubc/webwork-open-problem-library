@@ -239,6 +239,8 @@ END_TEXT
 #########################################################
 ## Answers evaluation (Required)
 
+$showPartialCorrectAnswers = 1;
+
 ANS( num_cmp(@s11[0], tol=> 0.021) );
 ANS( num_cmp(@s22[0], tol=> 0.021) );
 ANS( num_cmp(@s33[0], tol=> 0.021) );

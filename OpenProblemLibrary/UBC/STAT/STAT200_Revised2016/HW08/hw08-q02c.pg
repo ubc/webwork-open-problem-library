@@ -11,16 +11,6 @@
 
 
 
-##KEYWORDS('statistics', 'statistical inference', 'hypothesis test', 'p-value', 'interpretatin')
-## DBsubject('Statistics')
-## DBchapter('Inference About a Population')
-## DBsection('Misc.')
-## Level(5)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -278,7 +268,7 @@ Context()->normalStrings;
 #  Answers
 #
 #
-
+$showPartialCorrectAnswers = 1;
 
 ANS( radio_cmp( $mc1->correct_ans() ) );
 ANS( radio_cmp( $mc2->correct_ans() ) );

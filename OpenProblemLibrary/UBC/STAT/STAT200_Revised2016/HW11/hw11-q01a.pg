@@ -9,17 +9,6 @@
 ##Attempts: Four. 
 ##Tagged by Nelson Chen. Jul 25, 2016. 
 
-
-##KEYWORDS('statistics', 'statistical inference', 'hypothesis test', 'p-value', 'interpretatin')
-## DBsubject('Statistics')
-## DBchapter('Inference About a Population')
-## DBsection('Misc.')
-## Level(5)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -37,7 +26,7 @@ loadMacros(
 TEXT(beginproblem());
 
 # Show which answers are correct and which ones are incorrect
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
 
 ##############################################################
 #

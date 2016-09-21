@@ -10,21 +10,6 @@
 ##Attempts: Two. 
 
 
-
-##KEYWORDS('statistics', 'probability', 'random variables')
-## DBsubject('Statistics')
-## DBchapter('Distributions')
-## DBsection('Binomial Distribution')
-## Level(3)
-## Date('09/25/2012')
-## Author('Lance R')
-## Institution('UBC')
-## TitleText1('No Text')
-## EditionText1('?')
-## AuthorText1('?')
-## Section1('?')
-## Problem1('9')
-
 DOCUMENT();
 
 loadMacros(
@@ -74,7 +59,8 @@ END_TEXT
 
 #######
 
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
+$showPartialCorrectAnswers = 1;
 
 ANS( radio_cmp( $mc->correct_ans() ) );
 

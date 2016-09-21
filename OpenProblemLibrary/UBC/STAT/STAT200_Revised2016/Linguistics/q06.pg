@@ -209,6 +209,8 @@ END_TEXT
 #########################################################
 ## Answers evaluation (Required)
 
+
+$showPartialCorrectAnswers = 1;
 ANS( radio_cmp( $q1mc -> correct_ans() ) );
 ANS( radio_cmp( $q2mc -> correct_ans() ) );
 ANS( num_cmp(@s3[0], tol=> 0) );

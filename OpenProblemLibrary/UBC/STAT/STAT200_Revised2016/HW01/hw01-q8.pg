@@ -7,22 +7,6 @@
 ##ENDDESCRIPTION
 ##Tagged by Nelson Chen on May, 14, 2016.
 
-
-## Tagged by Jonathan Baik
-## 2014-04-01
-## DBsubject('Statistics')
-## DBchapter('Part 1: Exploring Data')
-## DBsection('Chapter 1: Picturing Distributions with Graphs')
-## Level(1)
-## Date('05/04/2012')
-## Author('Lance R')
-## Institution('University of BC')
-## TitleText1('No Text')
-## EditionText1('?')
-## AuthorText1('?')
-## Section1('?')
-## Problem1('6')
-
 DOCUMENT();
 
 loadMacros(
@@ -53,7 +37,7 @@ END_TEXT
 
 #######
 
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
 
 ANS( radio_cmp( $mc->correct_ans() ) );
 

@@ -8,18 +8,6 @@
 ##Attempts: Two. 
 ###Tagged by Nelson Chen. Jul 7, 2016. 
 
-
-
-##KEYWORDS('statistics', 'statistical inference', 'hypothesis test', 'p-value', 'interpretatin')
-## DBsubject('Statistics')
-## DBchapter('Hypothesis Testing')
-## DBsection('Misc.')
-## Level(2)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -91,7 +79,7 @@ Context()->normalStrings;
 
 install_problem_grader(~~&std_problem_grader);
 
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
 
 ANS( $radio->cmp() );
 

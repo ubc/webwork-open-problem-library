@@ -3,9 +3,9 @@
 ##approximate 95% confidence interval for a mean given sample statistics
 ##using a t distribution'.)
 # DESCRIPTION
-## DBsubject('Statistics')
-## DBchapter('Confidence intervals')
-## DBsection('One sample mean - t')
+## DBsubject('Statistics')
+## DBchapter('Confidence intervals')
+## DBsection('One sample mean - t')
 ## Date('2015/12/19')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')

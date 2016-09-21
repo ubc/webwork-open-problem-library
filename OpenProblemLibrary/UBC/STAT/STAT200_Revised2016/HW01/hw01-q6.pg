@@ -9,19 +9,6 @@
 ##Attempts: Two. 
 
 
-## DBsubject('Statistics')
-## DBchapter('Descriptive Statistics')
-## DBsection('Mode')
-## Level(2)
-## Date('05/03/2012')
-## Author('Lance R')
-## Institution('University of BC')
-## TitleText1('No Text')
-## EditionText1('?')
-## AuthorText1('?')
-## Section1('?')
-## Problem1('4')
-
 DOCUMENT();
 
 loadMacros(
@@ -91,7 +78,7 @@ END_TEXT
 
 #######
 
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
 
 ANS( num_cmp($ans) );
 

@@ -10,16 +10,6 @@
 
 
 
-
-## DBsubject('Statistics')
-## DBchapter('Estimation')
-## DBsection('Confidence Intervals')
-## Level(3)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -115,6 +105,8 @@ Context()->normalStrings;
 #
 
 #install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 1;
 
 ANS( $lb->cmp() );
 ANS( $ub->cmp() );

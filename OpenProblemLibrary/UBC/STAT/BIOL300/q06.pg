@@ -4,9 +4,9 @@
 ##confidence interval for mean', 'find the test statistic and P-value for a t
 ##test', 'decide whether or not to reject the null hypothesis'.) 
 # DESCRIPTION
-## DBsubject('Statistics')
-## DBchapter('Hypothesis Testing')
-## DBsection('One sample mean - t')
+## DBsubject('Statistics')
+## DBchapter('Hypothesis Testing')
+## DBsection('One sample mean - t')
 ## Date('2015/12/30')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')

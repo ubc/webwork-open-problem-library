@@ -9,18 +9,6 @@
 ##Attempts: Five
 
 
-
-
-##KEYWORDS('statistics', 'statistical inference', 'hypothesis test', 'parameter identification', 'errors', 'p-values', 'interpretation')
-## DBsubject('Statistics')
-## DBchapter('Hypothesis Testing')
-## DBsection('One Sample - Means, Sigma not known')
-## Level(5)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -229,7 +217,7 @@ Context()->normalStrings;
 
 #install_problem_grader(~~&std_problem_grader);
 
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
 
 ANS( checkbox_cmp( $mc_a->correct_ans() ) );
 ANS( $mc_b->cmp() );

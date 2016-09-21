@@ -8,16 +8,6 @@
 ## Nelson Chen. 
 ##Attempts: Three. 
 
-
-## DBsubject('Statistics')
-## DBchapter('Probability')
-## DBsection('Independence')
-## Level(5)
-## KEYWORDS('Probability, Independence')
-## Author('Djun Kim')
-## Institution('UBC')
-## Date('2012/09/25')
-
 DOCUMENT();     
 loadMacros(
   "PGstandard.pl",  

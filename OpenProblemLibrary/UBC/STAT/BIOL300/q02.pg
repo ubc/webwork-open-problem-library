@@ -5,9 +5,9 @@
 ##sample using a t distribution, find an approximate 99 % confidence interval
 ##for a mean given the sample using a t distribution.)
 # DESCRIPTION
-## DBsubject('Statistics')
-## DBchapter('Confidence intervals')
-## DBsection('One sample mean - t')
+## DBsubject('Statistics')
+## DBchapter('Confidence intervals')
+## DBsection('One sample mean - t')
 ## Date('2015/12/29')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')

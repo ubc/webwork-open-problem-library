@@ -7,16 +7,6 @@
 ## Nelson Chen
 ## Jun 8th, 2016. 
 
-
-
-## DBsubject('Statistics')
-## DBchapter('Probability')
-## DBsection('Random Variables')
-## Level(2)
-## KEYWORDS('Statistics, Probability, Random Variables');
-## Author('Djun Kim')
-## Institution('UBC')
-
 DOCUMENT();     
 loadMacros(
   "PGstandard.pl",  

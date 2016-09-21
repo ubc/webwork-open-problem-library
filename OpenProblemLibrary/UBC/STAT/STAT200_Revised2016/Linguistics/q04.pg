@@ -88,6 +88,8 @@ END_TEXT
 #########################################################
 ## Answers evaluation (Required)
 
+
+$showPartialCorrectAnswers = 1;
 ANS( num_cmp(0.2, tol=> 0) );
 ANS( num_cmp(0.84, tol=> 0.0011) );
 

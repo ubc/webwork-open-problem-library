@@ -7,22 +7,6 @@
 ##KEYWORDS('statistics', 'multiple choice', 'display methods')
 ##Tagged by Nelson Chen, May 14, 2016.
 
-
-## Tagged by Jonathan Baik
-## 2014-04-01
-## DBsubject('Statistics')
-## DBchapter('Part 1: Exploring Data')
-## DBsection('Chapter 4: Scatterplots and Correlation')
-## Level(2)
-## Date('05/04/2012')
-## Author('Lance R')
-## Institution('University of BC')
-## TitleText1('No Text')
-## EditionText1('?')
-## AuthorText1('?')
-## Section1('?')
-## Problem1('7')
-
 DOCUMENT();
 
 loadMacros(

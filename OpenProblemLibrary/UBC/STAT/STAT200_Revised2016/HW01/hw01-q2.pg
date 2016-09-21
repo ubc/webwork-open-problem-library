@@ -7,15 +7,6 @@
 ##ENDDESCRIPTION
 ## Tagged by Nelson Chen, May 14, 2016.
 
-## Date('05/02/2012')
-## Author('Lance R')
-## Institution('University of BC')
-## TitleText1('No Text')
-## EditionText1('?')
-## AuthorText1('?')
-## Section1('?')
-## Problem1('2')
-
 DOCUMENT();
 
 loadMacros(
@@ -45,7 +36,7 @@ END_TEXT
 
 #######
 
-$showPartialCorrectAnswers = 0;
+$showPartialCorrectAnswers = 1;
 
 ANS( radio_cmp( $mc->correct_ans() ) );
 

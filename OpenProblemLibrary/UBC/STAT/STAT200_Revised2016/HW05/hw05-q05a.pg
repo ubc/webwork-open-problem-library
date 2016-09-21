@@ -10,20 +10,6 @@
 ##Attempts: Two. 
 
 
-
-## DBsubject('Statistics')
-## DBchapter('Distributions')
-## DBsection('Binomial Distribution')
-## Level(3)
-## Date('06/06/2012')
-## Author('Djun Kim')
-## Institution('The University of British Columbia')
-## TitleText1('')
-## EditionText1('')
-## AuthorText1('')
-## Section1('')
-## Problem1('')
-
 ## Based on /problems/probability/probabilityMC34.pg authored by Lance Robson
 
 DOCUMENT();

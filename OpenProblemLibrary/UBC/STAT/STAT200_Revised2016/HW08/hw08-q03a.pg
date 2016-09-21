@@ -8,18 +8,6 @@
 ##attempts: Two. 
 ##Tagged by Nelson Chen. 
 
-
-
-##KEYWORDS('statistics', 'statistical inference', 'hypothesis test', 'p-value', 'interpretatin')
-## DBsubject('Statistics')
-## DBchapter('Hypothesis Testing')
-## DBsection('Significance Levels')
-## Level(5)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -98,6 +86,7 @@ Context()->normalStrings;
 #
 #
 
+$showPartialCorrectAnswers = 1;
 
 ANS( checkbox_cmp( $mc3->correct_ans() ) );
 

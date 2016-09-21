@@ -10,23 +10,6 @@
 ## Jun 9th, 2016
 ##Attempts: Two. 
 
-
-
-## DBsubject('Statistics')
-## DBchapter('Sampling Distributions and the Central Limit Theorem')
-## DBsection('Central Limit Theorem')
-## Level(5)
-## Date('10/08/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-## TitleText1('')
-## EditionText1('')
-## AuthorText1('')
-## Section1('')
-## Problem1('')
-
-
-
 DOCUMENT();        # This should be the first executable line in the problem.
 
 loadMacros(
@@ -129,6 +112,7 @@ $BR
 
 END_TEXT
 
+$showPartialCorrectAnswers = 1;
 ANS( radio_cmp( $mc1->correct_ans() ) );
 ANS( radio_cmp( $mc2->correct_ans() ) );
 ANS( radio_cmp( $mc3->correct_ans() ) );

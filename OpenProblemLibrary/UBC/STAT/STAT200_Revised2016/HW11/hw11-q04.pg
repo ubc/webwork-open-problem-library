@@ -8,19 +8,6 @@
 ##Tagged by Nelson Chen, July 10, 2016. 
 ##Attempts: Three. 
 
-
-
-##KEYWORDS('statistics', 'statistical inference', 'confidence interval for mean', 'calculation', 'interpretation')
-
-## DBsubject('Statistics')
-## DBchapter('Estimation')
-## DBsection('Confidence Intervals')
-## Level(3)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -112,6 +99,8 @@ Context()->normalStrings;
 
 #install_problem_grader(~~&std_problem_grader);
 
+
+$showPartialCorrectAnswers = 1;
 ANS( $lb->cmp() );
 ANS( $ub->cmp() );
 

@@ -4,9 +4,9 @@
 ##statistic and P-value for a t test', 'decide whether or not to reject the null
 ##hypothesis'.) 
 # DESCRIPTION
-## DBsubject('Statistics')
-## DBchapter('Hypothesis Testing')
-## DBsection('One sample mean - t')
+## DBsubject('Statistics')
+## DBchapter('Hypothesis Testing')
+## DBsection('One sample mean - t')
 ## Date('2015/12/29')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')
@@ -124,11 +124,11 @@ between their eyes and nostrils. These organs detect the body heat of
 unlucky warm-blooded prey (mammals), but the snakes also use the pit organ
 to detect cooler spots in the environment to help in their thermoregulation.
 Researchers determined that western diamondback rattlesnakes had on average
-a 73% chance of moving into the right half of a Y-maze that was cooled to 30 ºC, instead of the left half which was at 40 ºC (Krochmal \(et~ al\). 2004). Was this pattern a preference for the right
+a 73% chance of moving into the right half of a Y-maze that was cooled to 30 degree Celsius, instead of the left half which was at 40 degree Celsius (Krochmal \(et~ al\). 2004). Was this pattern a preference for the right
 side of the maze (that just happened to be cooled), or was it a direct
 response to the difference in heat? To test this, five snakes were put into
 the same maze several times individually, and the percentage of trials in
-which they turned right was recorded when both sides were heated to 40 ºC. Suppose that the average of the percentages for the five snakes was 
+which they turned right was recorded when both sides were heated to 40 degree Celsius. Suppose that the average of the percentages for the five snakes was 
 @x[0]%, and the standard deviation was @s[0]%. Assume that the
 distribution of these percentages was normal.
 $BR

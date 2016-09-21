@@ -8,16 +8,6 @@
 ##Tagged by Nelson Chen. Jul 8, 2016. 
 ##Attempts: Four.
 
-
-## DBsubject('Statistics')
-## DBchapter('Statistical Inference')
-## DBsection('Hypothesis test')
-## Level(5)
-## Date('10/24/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
-
 ########################################################################
 
 DOCUMENT();      
@@ -246,6 +236,8 @@ Context()->normalStrings;
 #  Answers
 #
 #
+
+$showPartialCorrectAnswers = 1;
 
 
 ANS( radio_cmp( $mc1->correct_ans() ) );

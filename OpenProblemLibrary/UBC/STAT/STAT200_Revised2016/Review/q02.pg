@@ -1,24 +1,13 @@
 ##DESCRIPTION
-## DBsubject(ÃÂ'StatisticsÃÂ')
-## DBchapter(ÃÂ'Hypothesis testsÃÂ')
-## DBsection(ÃÂ'One sample proportionÃÂ')
+## DBsubject("Statistics")
+## DBchapter("Hypothesis tests")
+## DBsection("One sample proportion")
 ## Level(3)
 ## KEYWORDS('sample proportion', 'hypothesis tests', 'type I error', 'type II
 ## error')
 ##ENDDESCRIPTION
 ##Attempts: Four. 
 ##Tagged by Nelson Chen. Jul 25, 2016. 
-
-
-##KEYWORDS('statistics', 'statistical inference', 'hypothesis test', 'p-value', 'interpretatin')
-## DBsubject('Statistics')
-## DBchapter('Inference About a Population')
-## DBsection('Misc.')
-## Level(5)
-## Date('7/13/2012')
-## Author('Djun Kim')
-## Institution('UBC')
-
 
 ########################################################################
 
@@ -283,7 +272,7 @@ Context()->normalStrings;
 #
 #
 
-
+$showPartialCorrectAnswers = 1;
 ANS( radio_cmp( $mc1->correct_ans() ) );
 ANS( radio_cmp( $mc2->correct_ans() ) );
 ANS( num_cmp(@pvalR[0], tol=> 0.00015, tolType=>"absolute") );
