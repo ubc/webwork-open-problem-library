@@ -1,15 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables'; 'expectation, variance'; 'find the mean and
-##variance of a linear function of a random variable given its mean and
-##variance'.) 
+##KEYWORDS( 'Random variables'; 'continuous probability distributions') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Random variables)
-## DBsection(Variance, standard deviation)
-## Date(2015/07/11)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Continuous distributions')
+## DBsection('Other distribution')
+## Date('2015/07/11')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################

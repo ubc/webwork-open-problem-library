@@ -1,16 +1,12 @@
 #########################################################
-##KEYWORDS('Random variable'; 'normal'; 'find the probability a normal
-##variable is less than a given value, the probability a normal variable lies
-##within a given value of the mean, and the value a normal variables exceeds
-##with a given probability'.) 
+##KEYWORDS( 'Random variables'; 'normal distribution') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Continuous distributions)
-## DBsection(Gaussian normal)
-## Date(2015/07/11)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Continuous distributions')
+## DBsection('Gaussian normal')
+## Date('2015/07/11')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -109,9 +105,9 @@ $BBOLD(c) $EBOLD The probability is \(@p[0]\) that \(X\) will be more than how m
 END_TEXT
 #########################################################
 ## Answers evaluation (Required)
-ANS( num_cmp($q1ans, tol=> 0.021) );
-ANS( num_cmp($q2ans, tol=> 0.021) );
-ANS( num_cmp($q3ans, tol=> 0.031) );
+ANS( num_cmp($q1ans, tol=> 0.02) );
+ANS( num_cmp($q2ans, tol=> 0.02) );
+ANS( num_cmp($q3ans, tol=> 0.02) );
 
 #########################################################
 ## Solution (Optional but recommended)

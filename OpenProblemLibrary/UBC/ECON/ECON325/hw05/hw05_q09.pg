@@ -1,15 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables';'linear combination'; 'find the mean of a
-##linear combination of two variables, find the standard deviation of a linear
-##combination of two variables given their covariance'.) 
+##KEYWORDS( 'Random variables'; 'linear combination') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Several variables)
-## DBsection(Covariance & correlation)
-## Date(2015/07/11)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Several variables')
+## DBsection('Covariance and correlation')
+## Date('2015/07/11')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -76,12 +73,12 @@ round(q2 , 2)
 ');
 
 @q3=rserve_eval('
-q3=vx+vy-2*c
+q3=vx+vy-c
 round(sqrt(q3), 2)
 ');
 
 @v=rserve_eval('
-tem=vx+vy-2*c
+tem=vx+vy-c
 round(tem, 4)
 ');
 
@@ -201,7 +198,7 @@ $BR
 $BR
 $BCENTER
 \( 
-Var(aX+bY+c) = a^2 Var(X) + b^2 E(Y) +2ab Cov(X, Y).   
+Var(aX+bY+c) = a^2 Var(X) + b^2 E(Y) +ab Cov(X, Y).   
 \)
 $ECENTER
 $BR
@@ -210,7 +207,7 @@ $BR
 $BR
 $BCENTER
 \( 
-Var(X-Y) = @vx[0] + @vy[0] - 2 \times @c[0] = $v[0].   
+Var(X-Y) = @vx[0] + @vy[0] - @c[0] = $v[0].   
 \)
 $ECENTER
 $BR
@@ -218,12 +215,12 @@ The standard deviation is the square root of the above value.
 $BR
 $BR
 
-$BBOLD (d) $EBOLD For any random variables \(X\) and \(Y\) and constants \(a, b, c\)
+$BBOLD (c) $EBOLD For any random variables \(X\) and \(Y\) and constants \(a, b, c\)
 $BR
 $BR
 $BCENTER
 \( 
-Var(aX+bY+c) = a^2 Var(X) + b^2 E(Y) +2ab Cov(X, Y).   
+Var(aX+bY+c) = a^2 Var(X) + b^2 E(Y) +ab Cov(X, Y).   
 \)
 $ECENTER
 $BR
@@ -232,7 +229,7 @@ $BR
 $BR
 $BCENTER
 \( 
-Var(Y-X) = @vx[0] + @vy[0] - 2\times @c[0] = $v[0].   
+Var(X-Y) = @vx[0] + @vy[0] - @c[0] = $v[0].   
 \)
 $ECENTER
 $BR
