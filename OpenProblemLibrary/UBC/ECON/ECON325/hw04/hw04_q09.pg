@@ -1,16 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables'; 'bivariate distributions, correlation,
-##linear combination'; 'find the correlation between two variables given first
-##and second moments from their marginal distribution and the covariance, find
-##the mean and standard deviation of a linear combination of the two variables'.) 
+##KEYWORDS( 'Random variables'; 'bivariate distributions') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Several variables)
-## DBsection(Covariance & correlation)
-## Date(2015/07/08)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Several Variables')
+## DBsection('Covariance and correlation')
+## Date('2015/07/08')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -88,7 +84,7 @@ round(e, 2)
 
 
 @qvar= rserve_eval('
-v<-b^2*vx+vy+2*b*c
+v<-b^2*vx+vy+b*c
 round(v, 2)
 ');
 
@@ -196,7 +192,7 @@ $BBOLD (c) $EBOLD  For any random variables, X and Y and constants a, b and c,
 $BR
 $BCENTER
 \( 
-Var(aX+bY+c)=a^2Var(X) + b^2Var(Y) +2abCov(X, Y).    
+Var(aX+bY+c)=a^2Var(X) + b^2Var(Y) +abCov(X, Y).    
 \)
 $ECENTER
 $BR
@@ -204,8 +200,8 @@ Hence, in this case
 $BR
 $BCENTER
 \( 
-Var(Z)=Var(@a[0]+@b[0]X+Y)= @b[0]^2 \times Var(X) + Var(Y) + 2 \times @b[0] \times Cov(X, Y) =  
-@b[0]^2 \times @vx[0] +@vy[0] +2 \times @b[0] \times @c[0]=@qvar[0]. 
+Var(Z)=Var(@a[0]+@b[0]X+Y)= @b[0]^2 \times Var(X) + Var(Y) + @b[0] \times Cov(X, Y) =  
+@b[0]^2 \times @vx[0] +@vy[0] +@b[0] \times @c[0]=@qvar[0]. 
 \)
 $ECENTER
 $BR

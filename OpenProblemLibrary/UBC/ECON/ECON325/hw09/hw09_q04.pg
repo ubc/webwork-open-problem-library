@@ -1,0 +1,154 @@
+#########################################################
+##KEYWORDS( 'Inference'; 'confidence interval') 
+# DESCRIPTION
+## DBsubject('Statistics')
+## DBchapter('Confidence intervals')
+## DBsection('Paired sample')
+## Date('2015/08/20')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('3')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@x=rserve_eval('
+x <- round(rnorm(8, mean=70, sd=10), 1)
+');
+
+@z=rserve_eval('
+z <- round(rnorm(8, mean=5, sd=4), 1)
+');
+
+@y=rserve_eval('
+y <- x+z
+');
+
+@d=rserve_eval('
+d <- x-y
+');
+
+@sd=rserve_eval('
+s=sd(d)
+');
+
+@lower=rserve_eval('
+l=mean(d) - 2.3646 * s / sqrt(8)
+round(l, 3) 
+');
+
+@upper=rserve_eval('
+u=mean(d) + 2.3646 * s / sqrt(8)
+round(u, 3) 
+');
+
+$q1ans = @lower[0];
+$q2ans = @upper[0];
+
+####Build table
+$Table = 
+"\(       
+\begin{array}{c|cccccccc}
+\text{Farm no.:} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8  \\
+\hline
+ \text{Type X} & @x[0] & @x[1] & @x[2] & @x[3] & @x[4] & @x[5] & @x[6] & @x[7]  \\
+\text{Type Y} & @y[0] & @y[1] & @y[2] & @y[3] & @y[4] & @y[5] & @y[6] & @y[7]  \\
+\end{array}
+\)"
+;
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+To test two promising types of grape, \(X\) and \(Y\), under normal farming
+conditions, a wine company selected eight farms at random in British
+Columbia and planted both types in experimental plots on each farm.
+The yields, converted to kg per acre, for the eight locations were:
+$BR
+$BR
+$BCENTER
+$Table
+$ECENTER
+$BR
+Construct a 95% confidence interval for the difference in population
+mean yield for the two types of grapes. Assume that the population
+distribution of the differences is normal. Give the upper and lower
+bounds on your interval, rounding your answers to three decimal places where appropriate. (  \{  ans_rule(7) \},  \{  ans_rule(7) \} )
+END_TEXT
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.01) );
+ANS( num_cmp($q2ans, tol=> 0.01) );
+
+
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+We are interested in the difference in mean yields (in kg/acre), \( \mu_X - \mu_Y \) say. 
+We have paired data of the form \( (x_i; y_i) \), for  \(i = 1, 2, \ldots, 8\) and cannot assume the observations within each pair (i.e., on each farm) are independent. We calculate the eight differences \( d_i=x_i - y_i \) and find the mean difference \( \bar{d} \). As the differences should take a Normal distribution (given we are told the population distribution of differences is Normal), inference is based on
+$BR
+$BR
+$BCENTER
+\( 
+\frac{\bar{d}-(\mu_X - \mu_Y)} {s_d/8}
+\)
+$ECENTER
+$BR
+following the t distribution with 7 degrees of freedom, where \( s_d^2=\frac{1}{7} \sum_{i=1}^8(d_i-\bar{d})^2 \) is the sample variance of the within-farm differences. 
+Hence, for example, a \( (1-\alpha) \) % confidence interval for \( \mu_X -\mu_Y \) is 
+$BR
+$BR
+$BCENTER
+\( 
+\bar{d} -t_7(\alpha/2) \frac{s_d}{\sqrt{8}}. 
+\)
+$ECENTER
+$BR
+In this case we find \(s_d= @sd[0] \). and the 97.5% point of \(t_7\) is 2.3646,
+so the required interval is
+$BR
+$BR
+$BCENTER
+\( 
+( $q1ans, $q2ans)
+\)
+$ECENTER
+$BR
+END_SOLUTION
+ENDDOCUMENT();
+
+
+
+

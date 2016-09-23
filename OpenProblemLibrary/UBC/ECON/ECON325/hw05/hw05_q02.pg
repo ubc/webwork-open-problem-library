@@ -1,15 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables'; 'uniform distribution'; 'find the probability
-##over an interval for a uniform variable, find the first and third quartiles
-##for a uniform variable'.) 
+##KEYWORDS( 'Random variables'; 'continuous probability distributions') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Continuous distributions)
-## DBsection(Uniform)
-## Date(2015/07/11)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Continuous distributions')
+## DBsection('Other distribution')
+## Date('2015/07/11')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -111,10 +108,10 @@ P( @x1[0] < X <@x2[0]) =(@x2[0] - @x1[0])/@x[0]=$q1ans.
 $ECENTER
 $BR
 $BR   
-$BBOLD (b) $EBOLD The median of \(X\) is \(@x[0]/2\). The Âfirst quartile is \(@x[0]/4=$q2ans\).
+$BBOLD (b) $EBOLD The median of \(X\) is \(@x[0]/2\). The first quartile is \(@x[0]/4=$q2ans\).
 $BR
 $BR   
-$BBOLD (b) $EBOLD The Âthird quartile is \(0.75 \times @x[0] = $q3ans\).
+$BBOLD (b) $EBOLD The third quartile is \(0.75 \times @x[0] = $q3ans\).
 
 END_SOLUTION
 ENDDOCUMENT();

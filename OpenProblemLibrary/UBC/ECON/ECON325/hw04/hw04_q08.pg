@@ -1,16 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables'; 'bivariate distributions, conditional
-##distribution, covariance, independence'; 'find a conditional distribution from
-##a joint discrete distribution, find the covariance, determine if the two
-##variables are independent'. ) 
+##KEYWORDS( 'Random variables'; 'bivariate distributions') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Several variables)
-## DBsection(Joint distribution)
-## Date(2015/07/08)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Several Variables')
+## DBsection('Joint distribution')
+## Date('2015/07/08')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -160,7 +156,7 @@ P(XY=xy) & @p1[0] + @p2[0] +@p3[0] & @p4[0]
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-Define a pair of random variables as follows:
+Define a pair of random variables as follows:
 $BR
 $BR
 $BCENTER
@@ -254,7 +250,7 @@ Cov(X, Y) = E((X- E(X))(Y- E(Y)))=E(XY)-E(X)E(Y).
 \)
 $ECENTER
 $BR
-The second form above can be the easier to apply in practice, and requires finding the distribution of \(XY\). In this case we see
+The second form above can be the easier to apply in practice, and requires finding the distribution of \(XY\). In this case we see
 $BR
 $BR
 $BCENTER
@@ -287,7 +283,7 @@ E(Y)= 0 \times (@p1[0] +@p2[0]) + 1 \times (@p3[0]+ @p4[0]) = @ey[0].
 $ECENTER
 $BR
 $BR
-So we find
+So we find
 $BR
 $BR
 $BCENTER

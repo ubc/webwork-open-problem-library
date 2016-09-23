@@ -1,17 +1,13 @@
 #########################################################
-##KEYWORDS('Inference'; 'hypothesis test, one-sided test for mean, normal
-##distribution with unknown variance, critical value'; 'find the test statistic
-##for a one--sample t test, find the critical value for the test, decide
-##whether or not to reject the null hypothesis at the 5% significance level'.) 
+##KEYWORDS( 'Inference'; 'hypothesis test') 
 # DESCRIPTION
-## DBsubject(Statistics)
-## DBchapter(Hypothesis tests)
-## DBsection(One sample mean - t)
-## Date(2015/07/29)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
-## level('3')
+## DBsubject('Statistics')
+## DBchapter('Hypothesis tests')
+## DBsection('One sample mean')
+## Date('2015/07/29')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('4')
 
 #########################################################
 DOCUMENT();
@@ -159,8 +155,4 @@ $BR
 $BBOLD (c) $EBOLD If the test statistic is greater than $q2ans, we reject the null hypothesis at the 5% significance level. Otherwise we do not reject the hypothesis that the mean impurity level is 3%.
 
 END_SOLUTION
-
-COMMENT('This problem requires WeBWorK integration of R statistical software.
-See the WeBWorK wiki for documentation.');
-
 ENDDOCUMENT();

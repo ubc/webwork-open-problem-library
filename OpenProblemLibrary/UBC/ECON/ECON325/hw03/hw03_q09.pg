@@ -1,14 +1,13 @@
 #########################################################
+##KEYWORDS('Combinatorics'; 'find number of combinations of a subset of objects both within grouping.')
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Sample Space)
-## DBsection(Probability: direct computation, inclusion/exclusion)
-## Date(2015/07/05)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
-## KEYWORDS('Probability'; 'events'; 'conditional')
-## level('3')
+## DBsubject('Combinatorics')
+## DBchapter('Counting')
+## DBsection('Combinations')
+## Date('2015/07/05')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('2')
 
 #########################################################
 DOCUMENT();
@@ -42,116 +41,52 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 rserve_eval("set.seed($seed)"); ## can not combine with the rest
 
 @x=rserve_eval('
-x <- round(runif(1, min=0.35, max=0.5), 2)
-');
-
-@xx=rserve_eval('
-100*x
+x <- sample(5:12, 1)
 ');
 
 @y=rserve_eval('
-y <- round(runif(1, min=0.5, max=0.6), 2)
-');
-
-@yy=rserve_eval('
-100*y
-');
-
-@z=rserve_eval('
-z <- round(runif(1, min=0.3, max=0.5), 2)
-');
-
-@zz=rserve_eval('
-100*z
+y <- sample(4:11, 1)
 ');
 
 @q1=rserve_eval('
-round(x*y, 2)
+choose(x, 3)*choose(y, 2)
 ');
 
 @q2=rserve_eval('
-round(x+y-x*y,  2)
+choose(x-1, 2)*choose(y, 2)
 ');
-
-@q3=rserve_eval('
-round(z*y, 2)
-');
-
-@q4=rserve_eval('
-round(x+y-z*y,  2)
-');
-
-@q5=rserve_eval('
-round(1-z,  2)
-');
-
 
 $q1ans = @q1[0];
 $q2ans = @q2[0];
-$q3ans = @q3[0];
-$q4ans = @q4[0];
-$q5ans = @q5[0];
 
 #########################################################
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-A computer software company has submitted bids on two separate government contracts, A and B. The company estimates that it has a @xx[0] percent chance of winning contract A and a @yy[0] percent chance of winning contract B. The company believes that winning contract A is independent of winning contract B. Answer the following questions, rounding your answers to two decimal places where appropriate.
+A committee of 3 economists and 2 mathematicians must be formed from @x[0] economists (one of these economists is a Nobel prize winner) and @y[0] mathematicians. In how many ways can this be done if
 $BR
 $BR
-$BBOLD(a) $EBOLD What is the probability that the company will win both contracts?
+$BBOLD(a) $EBOLD any mathematician and economist can be selected? 
 \{ans_rule(7) \} 
 $BR
 $BR
-$BBOLD(b) $EBOLD What is the probability that the company will win at least one of
-the two contracts? \{ans_rule(7) \} 
-$BR
-$BR
-Now suppose that the company believes that, given that it wins contract B, it has a @zz[0] percent chance of winning contract A.
-$BR
-$BR
-$BBOLD(c) $EBOLD What is the probability that the company will win both contracts? \{ans_rule(7) \} 
-$BR
-$BR
-$BBOLD (d) $EBOLD What is the probability that the company will win at least one of
-the two contracts? \{ans_rule(7) \} 
-$BR
-$BR
-$BBOLD (e) $EBOLD If the company wins contract B, what is the probability that it
-will not win contract A? \{ans_rule(7) \} 
+$BBOLD(b) $EBOLD the Nobel prize winning economist must be on the committee? \{ans_rule(7) \} 
 END_TEXT
 
 #########################################################
 ## Answers evaluation (Required)
-ANS( num_cmp($q1ans, tol=>0.02) );
-ANS( num_cmp($q2ans, tol=>0.02) );
-ANS( num_cmp($q3ans, tol=>0.02) );
-ANS( num_cmp($q4ans, tol=>0.02) );
-ANS( num_cmp($q5ans, tol=>0.02) );
+ANS( num_cmp($q1ans) );
+ANS( num_cmp($q2ans) );
+
 
 #########################################################
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-
-Define the events A = {Company wins contract A} and
-B = {Company wins contract B}. Initially these events are assumed independent. 
+$BBOLD (a) $EBOLD The three economists can be chosen in \( \binom{@x[0]}{3} \) ways, and the two mathematicians can be selected in \( \binom{@y[0]}{2} \) ways. In total then there are \(  \binom{@x[0]}{3} \times \binom{@y[0]}{2} \) possibilities.   
 $BR
 $BR
-$BBOLD (a) $EBOLD The event is the intersection of A and B; and if independent
-this has probability \( P(A) \times P(B) = @x[0] \times @y[0] =@q1[0] \). 
-$BR  
-$BR
-$BBOLD (b) $EBOLD The event is question is the union of A and B, having probability \( P(A) + P(B) -P(A~\text{and}~B) = @x[0] + @y[0] -@x[0] \times @y[0] =@q2[0] \).  
-$BR  
-$BR
-$BBOLD (c) $EBOLD It is now assumed that the events A and B are not independent, with the event A given B (denoted {A|B}) having probability @z[0]. The probability of A and B is therefore \( P(A~\text{and}~B) = P(A|B) \times P(B)= @z[0] \times @y[0]  =@q3[0] \). 
-$BR
-$BR
-$BBOLD (d) $EBOLD The event is question is the union of A and B, now having
-probability \( P(A) + P(B) -P(A~\text{and}~B) = @x[0] + @y[0] -@z[0] \times @y[0] =@q4[0] \).
-$BR
-$BR
-$BBOLD (e) $EBOLD We know that given contract B is won, the probability of winning contract A is @z[0]. Therefore, given that contract B is won, the probability of not winning contract A must be 1-@z[0]= @q5[0].
+$BBOLD (b) $EBOLD The Nobel prize winner must be one of the three economists,
+leaving selecting the other two in  \( \binom{@x[0]-1}{2} \) possible ways. The mathematicians can be chosen in \( \binom{@y[0]}{2} \) as in (a). Hence the number of possibilities is  \(  \binom{@x[0]-1}{2} \times \binom{@y[0]}{2} \).   
 END_SOLUTION
 ENDDOCUMENT();

@@ -1,17 +1,12 @@
 #########################################################
-##KEYWORDS('Inference'; 'confidence interval for difference in two means,
-##two--sample normal inference with small samples using pooled estimator of
-##variance'; 'find pooled estimate of the common variance from two normal
-##samples, find a 95% confidence interval for the difference in two normal
-##means based on small samples and using the t distribution'.) 
+##KEYWORDS( 'Inference'; 'confidence interval') 
 # DESCRIPTION
-## DBsubject(Statistics)
-## DBchapter(Confidence intervals)
-## DBsection(Independent samples - t)
-## Date(2015/08/20)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
+## DBsubject('Statistics')
+## DBchapter('Confidence intervals')
+## DBsection('Independent samples-t')
+## Date('2015/08/20')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -179,10 +174,6 @@ $BCENTER
 $ECENTER
 $BR
 END_SOLUTION
-
-COMMENT('This problem requires WeBWorK integration of R statistical software.
-See the WeBWorK wiki for documentation.');
-
 ENDDOCUMENT();
 
 

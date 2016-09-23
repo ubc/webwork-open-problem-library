@@ -1,16 +1,13 @@
 #########################################################
-##KEYWORDS('Probability'; 'combinatorics'; 'find number of permutations of
-##objects, find the probability of a single permutation, find the probability
-##of collections of permutations satisfying specified criteria'.)
+##KEYWORDS( 'Probability'; 'events union complement') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Sample Space)
-## DBsection(Probability: direct computation, inclusion/exclusion)
-## Date(2015/07/03)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
-## level('3')
+## DBsubject('Probability')
+## DBchapter('Sample Space')
+## DBsection('Probability direct computation and inclusion/exclusion')
+## Date('2015/07/03')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('2')
 
 #########################################################
 DOCUMENT();
@@ -29,6 +26,7 @@ loadMacros(
 #########################################################
 ## Setup: this is where we use Perl and PG objects (Required)
 
+
 ###Random number generator seed based on student's login. No need to change.
 Context("Numeric");
 # warn("Student name: $studentName, login: $studentLogin, id: $studentID");
@@ -43,91 +41,172 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 ####Call R server
 rserve_eval("set.seed($seed)"); ## can not combine with the rest
 
-@x=rserve_eval('
-x <- sample(3:8, 1)
+@p1=rserve_eval('
+x <- rexp(n=100, rate=1)
+x1 <- x[x<1]
+x2 <- x[1<x & x<2]
+x3 <- x[2<x & x<3]
+x4 <- x[3<x & x<4]
+p1 <- round(length(x1)/100, 2)
 ');
 
-@y=rserve_eval('
-y <- sample(2:7, 1)
+@p2=rserve_eval('
+p2 <- round(length(x2)/100, 2)
 ');
 
-@q1=rserve_eval('
-x*y
+@p3=rserve_eval('
+p3 <- round(length(x3)/100, 2)
 ');
 
-@q2=rserve_eval('
-round(1/x, 2)
+@p4=rserve_eval('
+p4 <- round(length(x4)/100, 2)
 ');
 
-@q3=rserve_eval('
-round(1/(x*y), 2)
+@p5=rserve_eval('
+p5 <- round(1- (p1+p2+p3+p4), 2)
 ');
 
-@q4=rserve_eval('
-round((1/x)+(1/y)-1/(x*y), 2)
-');
+$q1ans = @p1[0]+@p2[0]+@p3[0];
+$q2ans = @p3[0]+@p4[0]+@p5[0];
+$q3ans = 1-(@p1[0]+@p2[0]+@p3[0]);
+$q4ans=@p3[0];
+$q5ans = 1;
 
+####
+$mc1 = new_multiple_choice( );
+$mc1 -> qa( "Are A and B mutually exclusive?" , "No");
+$mc1 -> extra("Yes");
 
+###
+$mc2 = new_multiple_choice( );
+$mc2 -> qa( "Are A and B collectively exhaustive?" , "Yes");
+$mc2 -> extra("No");
 
-$q1ans = @q1[0];
-$q2ans = @q2[0];
-$q3ans = @q3[0];
-$q4ans = @q4[0];
+####Build table
+$Table = 
+"\(       
+\begin{array}{c|c}
+\text{Number of defective parts} & \text{Probability}  \\
+\hline
+0 & @p1[0] \\
+1 & @p2[0] \\
+2 & @p3[0] \\
+3 & @p4[0] \\
+>3 & @p5[0]
+\end{array}
+\)"
+;
 
 #########################################################
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-Suppose a student has @x[0] ties and @y[0] shirts and there
-is one pink tie and one pink shirt. Consider that the student is indifferent
-among the shirts and ties. That is, any shirt or tie is equally acceptable. Answer the following questions, rounding your answers to two decimal places where appropriate.
+A car manufacturer receives a particular part in shipments of 100. Research has indicated the following probabilities for numbers of defective parts in a shipment:
 $BR
 $BR
-$BBOLD(a) $EBOLD How many different selections are there for a shirt and a tie? \{  ans_rule(7) \} 
+$BCENTER
+$Table
+$ECENTER
+$BR
+Define the following events: A = {Defective parts in a shipment is less
+than 3} and B = {Defective parts in a shipment is more than 1}.
 $BR
 $BR
-$BBOLD(b) $EBOLD  What is the probability of selecting a pink tie?  \{  ans_rule(7) \} 
+$BBOLD(a) $EBOLD What is the probability of event  \(A\) ? \{  ans_rule(7) \} 
 $BR
 $BR
-$BBOLD(c) $EBOLD What is the probability of selecting a pink tie and a pink shirt?  \{  ans_rule(7) \} 
+$BBOLD(b) $EBOLD What is the probability of event \(B\)?  \{  ans_rule(7) \} 
 $BR
 $BR
-$BBOLD(d) $EBOLD  What is the probability of selecting a pink tie or a pink shirt (or both)?  \{  ans_rule(7) \} 
-
+$BBOLD(c) $EBOLD What is the probability of the complement of \(A\)?  
+\{ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(d) $EBOLD What is the probability of the intersection of \(A\) and \(B\)?
+\{ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(e) $EBOLD What is the probability of the union of \(A\) and \(B\)? 
+\{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(d) $EBOLD \{ $mc1->print_q() \}
+$BR
+\{ $mc1->print_a() \}
+$BR
+$BR
+$BBOLD(e) $EBOLD \{ $mc2->print_q() \}
+$BR
+\{ $mc2->print_a() \}
 END_TEXT
-
 #########################################################
 ## Answers evaluation (Required)
-ANS( num_cmp($q1ans) );
+ANS( num_cmp($q1ans, tol=> 0.02) );
 ANS( num_cmp($q2ans, tol=> 0.02) );
 ANS( num_cmp($q3ans, tol=> 0.02) );
 ANS( num_cmp($q4ans, tol=> 0.02) );
+ANS( num_cmp($q5ans) );
+ANS( radio_cmp( $mc1 -> correct_ans( ) ) );
+ANS( radio_cmp( $mc2 -> correct_ans( ) ) );
 
 
 #########################################################
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-$BBOLD (a) $EBOLD There are @x[0] ties for each of the @y[0] shirts, so there are @x[0]*@y[0]=@q1[0] choices.
 
-$BR
-$BR
-$BBOLD (b) $EBOLD There are @x[0] ties of which one is pink, so the probability of
-selecting the pink tie is 1/@x[0]=@q2[0].
-
-$BR
-$BR
-$BBOLD (c) $EBOLD Assuming the two selections are independent, there being @y[0] shirts with one pink, the probability of selecting both a pink tie and a pink shirt is (1/@x[0]) * (1/@y[0])=@q3[0]. 
-
-$BR
-$BR
-$BBOLD (d) $EBOLD Let us define event A as a pink tie and event B as a pink shirt. Use the addition rule of probabilities:
+$BBOLD (a) $EBOLD The probability of A is found by summing the probabilities of
+the disjoint events that comprise A. We see that A is the union of {0 defective parts}, {1 defective parts} and {2 defective parts}. Adding the corresponding probabilities we find
 $BR
 $BR
 $BCENTER
-\(
-P(A \cup B) = P(A) + P(B) - P(A \cap B) = 1/@x[0] + 1/@y[0] - (1/@x[0]) * (1/@y[0])=@q4[0].  
+\( 
+p(A)=@p1[0]+@p2[0]+@p3[0]. 
 \)
 $ECENTER
+$BR
+$BR   
+
+$BBOLD (b) $EBOLD The probability of B is found by summing the probabilities of
+the disjoint events that comprise B. We see that B is the union of {2 defective parts}, {3 defective parts} and {>3 defective parts}. Adding the corresponding probabilities we find 
+$BR
+$BR
+$BCENTER
+\( 
+p(B)=@p3[0]+@p4[0]+@p5[0]. 
+\)
+$ECENTER
+$BR
+$BR 
+
+$BBOLD (c) $EBOLD The complement of an event A is the event that A does not occur. We find the probability of the complement of an event A by subtracting from unity the probability of the event A. In this case, we have 
+\(1-(@p1[0]+@p2[0]+@p3[0]). \)
+$BR
+$BR 
+
+$BBOLD (d) $EBOLD The intersection events A and B is the event that there are
+two defective items. So the probability of their intersection is @p3[0].
+
+$BR
+$BR 
+
+$BBOLD (e) $EBOLD The probability of their union is the sum of their probabilities, this being @p1[0]+@p2[0]+@p3[0]+@p3[0]+@p4[0]+@p5[0], minus the probability of their intersection, @p3[0]. This probability is 1.
+
+$BR
+$BR 
+$BBOLD (f) $EBOLD As the events A and B could both occur together, they are not
+disjoint or mutually exclusive.
+
+$BR
+$BR 
+
+$BBOLD (g) $EBOLD Events are exhaustive when their union is the sample space.
+In this case we see the events A and B are exhaustive.
+$BR
 END_SOLUTION
 ENDDOCUMENT();
+
+
+
+
+

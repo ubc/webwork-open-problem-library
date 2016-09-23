@@ -1,14 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables'; 'discrete probability distribution'; 'find
-##probabilities for a discrete random variable given the mass function'.) 
+##KEYWORDS( 'Random variables'; 'discrete probability distribution') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Random variables)
-## DBsection(Variance, standard deviation)
-## Date(2015/07/08)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(2)
+## DBsubject('Probability')
+## DBchapter('Random Variables')
+## DBsection('Discrete: probability mass function')
+## Date('2015/07/08')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -132,7 +130,7 @@ ANS( num_cmp($q3ans, tol=> 0.02) );
 Context()->texStrings;
 BEGIN_SOLUTION
 
-$BBOLD (a) $EBOLD To find the expectation of a discrete random variable, we  find the sum of the possible values weighted by their probabilities. In this case
+$BBOLD (a) $EBOLD To find the expectation of a discrete random variable, we find the sum of the possible values weighted by their probabilities. In this case
 the expectation is
 $BR
 $BR
@@ -144,7 +142,7 @@ $ECENTER
 $BR
 $BR   
 
-$BBOLD (b) $EBOLD The variance can be found by finding the expectation of the squares of the values, then deducting the square of the expectation. To find the
+$BBOLD (b) $EBOLD The variance can be found by finding the expectation of the squares of the values, then deducting the square of the expectation. To find the
 mean of the squares, we calculate 
 $BR
 $BR

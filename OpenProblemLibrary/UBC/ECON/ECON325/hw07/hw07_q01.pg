@@ -1,0 +1,206 @@
+#########################################################
+##KEYWORDS( 'Inference'; 'estimation of mean') 
+# DESCRIPTION
+## DBsubject('Statistics')
+## DBchapter('Point estimation')
+## DBsection('Efficiency')
+## Date('2015/07/28')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('4')
+
+#########################################################
+DOCUMENT();
+## Initializations: (Required)
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "parserRadioButtons.pl",
+  "MathObjects.pl",
+  "parserMultiAnswer.pl",
+  "RserveClient.pl",
+  "answerHints.pl",
+  "PGcourse.pl"
+);
+
+#########################################################
+## Setup: this is where we use Perl and PG objects (Required)
+
+
+###Random number generator seed based on student's login. No need to change.
+Context("Numeric");
+# warn("Student name: $studentName, login: $studentLogin, id: $studentID");
+my $hash = crypt($studentLogin, 'a1');
+# warn("crypt: $hash");
+@nums = (0..9,'a'..'z','A'..'Z');
+my %nums = map { $nums[$_] => $_ } 0..$#nums;
+my $seed = 0;
+$seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
+##warn("seed: " . $seed);
+
+####Call R server
+rserve_eval("set.seed($seed)"); ## can not combine with the rest
+
+@a=rserve_eval('
+a <- round(runif(1, min=0.01, max=0.1),2)
+');
+
+@am=rserve_eval('
+1-a
+');
+
+
+@b=rserve_eval('
+b <- round(runif(1, min=0.2, max=0.4),2)
+');
+
+@bm=rserve_eval('
+1-b
+');
+
+@q1=rserve_eval('
+re1<-(a^2  + (1-a)^2)/(b^2+(1-b)^2)
+round(re1, 2)
+');
+
+@q2=rserve_eval('
+re2<- 0.5/(b^2+(1-b)^2)
+round(re2, 2)
+');
+
+$plot=rserve_start_plot('png');
+rserve_eval('
+x<-seq(0, 1, 0.02)
+y<-x^2+(1-x)^2
+plot(x, y, type="l", xlab="X", ylab="Y",ylim=c(0, 1), main="Plot of x^2 +(1-x)^2 for x on the unit interval ")
+axis(side = 1, at = seq(0.1, 0.9, 0.2))
+axis(side = 2, at = seq(0.1, 0.9, 0.2))
+');
+$plotpath=rserve_finish_plot($plot);
+
+
+
+
+$q1ans =@q1[0];
+$q2ans =@q2[0];
+
+#########################################################
+## Main Text: where all text goes (Required)
+Context()->texStrings;
+BEGIN_TEXT
+Let \(X\) and \(Y\) be observations taken at random from a distribution with mean \( \mu \)  and variance \( \sigma^2 \). Assume that \(X\) and \(Y\) are independently distributed. Consider the following two point estimators of the population mean \( \mu \):
+$BR
+$BR
+$BBOLD (1) $EBOLD 
+$BCENTER
+\(
+@a[0] X +@am[0] Y    
+\)
+$ECENTER
+$BR
+$BBOLD (2) $EBOLD 
+$BCENTER
+\(
+@b[0] X + @bm[0] Y    
+\)
+$ECENTER
+$BR
+$BR
+You should be able to confirm that both estimators are unbiased. Answer the following, rounding your answers to two decimal places where appropriate.
+$BR
+$BR
+$BBOLD(a) $EBOLD Find the relative efficiency, defined here using the larger variance
+in the numerator. \{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(b) $EBOLD Find an unbiased estimator of the population mean of the form
+\(cX+(1-c)Y \) for some \(0 < c < 1\) that is the most efficient. In the answer box give the relative efficiency of this estimator compared to the more efficient estimator from (1) and (2).  \{  ans_rule(7) \} 
+END_TEXT
+#########################################################
+## Answers evaluation (Required)
+ANS( num_cmp($q1ans, tol=> 0.02) );
+ANS( num_cmp($q2ans, tol=> 0.02) );
+
+#########################################################
+## Solution (Optional but recommended)
+Context()->texStrings;
+BEGIN_SOLUTION
+We define the relative efficiency of two estimators, say \( \hat{\theta}_1 \) and \( \hat{\theta}_2 \), as 
+$BR
+$BCENTER
+\(
+\frac{\text{Var} (\hat{\theta}_1)  }{ \text{Var} (\hat{\theta}_2)  }
+\)
+$ECENTER
+$BR
+when \( \text{Var} (\hat{\theta}_1) > \text{Var} (\hat{\theta}_2)  \), and the reciprocal of the ratio otherwise. 
+$BR
+$BR
+$BBOLD (a) $EBOLD For estimator (1),
+$BR
+$BR
+$BCENTER
+\begin{align} 
+Var ( @a[0] X + @am[0] Y  ) &= @a[0]^2 Var(X) +@am[0]^2 Var(Y) \\
+&= @a[0]^2 \sigma^2 + @am[0]^2 \sigma^2 \\
+&= \sigma^2 (@a[0]^2 + @am[0]^2 ). 
+\end{align}
+$ECENTER
+$BR
+$BR
+Similarly for estimator (2),
+$BR
+$BR
+$BCENTER
+\begin{align} 
+Var ( @b[0] X +@bm[0] Y  ) &= @b[0]^2 Var(X) + @bm[0]^2 Var(Y) \\
+&= @b[0]^2 \sigma^2 + @bm[0]^2 \sigma^2 \\
+&= \sigma^2 (@b[0]^2 +  @bm[0]^2 ). 
+\end{align}
+$ECENTER
+$BR
+$BR
+We see that \( \text{Var} (\hat{\theta}_1) > \text{Var} (\hat{\theta}_2)  \), hence the relative efficiency of the two estimators is     
+$BR
+$BCENTER
+\(
+\frac{ @a[0]^2 +  @am[0]^2  }{ @b[0]^2 + @bm[0]^2 } = $q1ans. 
+\)
+$ECENTER
+$BR
+
+$BR
+$BBOLD (b) $EBOLD In general, assuming an estimator of the form \( cX + (1-c)Y\) for some constant \(c\), the variance will be \(  \sigma^2 (c^2 +(1-c)^2) \), which as the plot below shows reaches a minimum when \(c = 1/2\). 
+ $BR
+$BCENTER
+\{
+image( $plotpath, width=>350, height=>200 )
+\}
+$ECENTER
+$BR
+Hence the most efficient estimator will be
+$BR
+$BCENTER
+\(
+0.5X + 0.5Y, 
+\)
+$ECENTER
+$BR
+which has variance
+$BR
+$BCENTER
+\(
+\sigma^2(0.5^2 + 0.5^2)=0.5\sigma^2.  
+\)
+$ECENTER
+$BR
+The required relative efficiency is therefore
+$BR
+$BCENTER
+\(
+\frac{0.5}{@b[0]^2 + @bm[0]^2} = $q2ans. 
+\)
+$ECENTER
+
+END_SOLUTION
+ENDDOCUMENT();

@@ -1,10 +1,10 @@
 #########################################################
-##KEYWORDS( 'Random variables'; 'continuous probability distributions') 
+##KEYWORDS( 'Probability'; 'binomial distribution') 
 # DESCRIPTION
 ## DBsubject('Probability')
-## DBchapter('Continuous distributions')
-## DBsection('Other distribution')
-## Date('2015/07/11')
+## DBchapter('Discrete distributions')
+## DBsection('Binomial')
+## Date('2015/08/20')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')
 ## level('3')
@@ -41,97 +41,51 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 ####Call R server
 rserve_eval("set.seed($seed)"); ## can not combine with the rest
 
-@m=rserve_eval('
-m <- sample(10:25, 1)
+@n=rserve_eval('
+n <- sample(25:35, 1)
 ');
 
-@v=rserve_eval('
-v <- sample(2:9, 1)
-');
 
-@a=rserve_eval('
-a <- sample(9:15, 1)
-');
-
-@b=rserve_eval('
-b <- sample(2:8, 1)
+@p=rserve_eval('
+p <- sample(25:35, 1)
 ');
 
 @q1=rserve_eval('
-round( a-b*m, 2)
-');
-
-@q2=rserve_eval('
-round(b^2*v, 2)
+re1= 1-pbinom(n,size=100, prob=p/100)
+round(re1, 3)
 ');
 
 $q1ans =@q1[0];
-$q2ans =@q2[0];
 
 #########################################################
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-Let \(X\) be a continuous random variable with mean \(@m[0]\) and variance \(@v[0]\).
-Define the random variable \(W= @a[0] - @b[0]X \). Answer the following questions.
-$BR
-$BR
-$BBOLD(a) $EBOLD What is the mean of \( W \)? \{  ans_rule(7) \} 
-$BR
-$BR
-$BBOLD(b) $EBOLD What is the variance of \( W \)?  \{  ans_rule(7) \} 
+Suppose that on a certain tropical island, the weather is so variable
+that the occurrence of rain on any day is independent of whether or
+not rain has fallen on previous days. Suppose it rains on @p[0]% of the
+days. Find the probability that, during a 100-day period when the
+tourist trade is at its peak, the number of rainy days is more than @n[0].
+Round off your answer to three decimal places. \{  ans_rule(7) \} 
 END_TEXT
 #########################################################
 ## Answers evaluation (Required)
-ANS( num_cmp($q1ans) );
-ANS( num_cmp($q2ans) );
+ANS( num_cmp($q1ans, tol=> 0.02) );
 
 #########################################################
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-
-$BBOLD (a) $EBOLD For any random variable \(X\) and constants a and b, 
-$BR
+Let \(X\) denote the number of days per year that it rains on
+the island. Then \(X\) is Binomially distributed with 100 trials and the
+probability of rain at each being \(@p[0]/100 \). Then we require
 $BR
 $BCENTER
-\( 
-E(a+bX)=a + bE(X).  
+\(
+P(X > @n[0]) = 1- P(X \leq @n[0] )
 \)
 $ECENTER
 $BR
-$BR   
-Hence, in this case
-$BR
-$BR
-$BCENTER
-\( 
-E(@a[0]-@b[0] X)=@a[0] - @b[0] \times @m[0]=$q1ans.  
-\)
-$ECENTER
-$BR
-$BR   
-
-
-$BBOLD (b) $EBOLD For any random variable \(X\) and constants a and b, 
-$BR
-$BR
-$BCENTER
-\( 
-V(a+bX)=b^2V(X).  
-\)
-$ECENTER
-$BR
-$BR   
-Hence, in this case
-$BR
-$BR
-$BCENTER
-\( 
-V(@a[0]-@b[0] X)=@b[0]^2 \times @v[0] =$q2ans.  
-\)
-$ECENTER
+which via tables or otherwise is $q1ans.   
 END_SOLUTION
 ENDDOCUMENT();
-
-
