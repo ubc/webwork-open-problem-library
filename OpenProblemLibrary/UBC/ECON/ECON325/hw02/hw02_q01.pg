@@ -1,14 +1,13 @@
 #########################################################
+##KEYWORDS('Exploratory data analysis', 'mean', ' computer the mean of a set of numbers')
 # DESCRIPTION
-## DBsubject(Statistics)
-## DBchapter(Exploratory data analysis/descriptive statistics)
-## DBsection(Summary statistics)
-## Date(2015/06/22)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
-## KEYWORDS('Exploratory data analysis', 'summary statistics', 'finance', 'find the geometric mean of a set of numbers', 'find numbers of years over which an inflation factor doubles prices' )
-## level('4')
+## DBsubject('Statistics')
+## DBchapter('Exploratory data analysis/descriptive statistics')
+## DBsection('Summary statistics')
+## Date('2015/06/22')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
+## level('2')
 
 #########################################################
 DOCUMENT();
@@ -41,29 +40,35 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 ####Call R server
 rserve_eval("set.seed($seed)"); ## can not combine with the rest
 
-@dat=rserve_eval('
-x <- round(runif(4, min=2, max=10), 0)
+@s1=rserve_eval('
+s1 <- round(runif(6, min=55, max=85), 0)
 ');
 
-@Prave_percentage = rserve_eval('
-y <- 1+x/100
-rave <- prod(y)^(1/4)-1
-round(100*rave, 2)
+@s2=rserve_eval('
+s2 <- round(runif(6, min=60, max=90), 0)
 ');
 
-@n=rserve_eval('
-round( (log(2)/log(1+rave)), 2)
+####Mean
+@s1_mean = rserve_eval('
+round(mean(s1), 2)
 ');
 
-$q1ans = @Prave_percentage[0];
-$q2ans = @n[0];
+@s2_mean = rserve_eval('
+round(mean(s2), 2)
+');
+
+
+$q1ans = @s1_mean[0];
+$q2ans = @s2_mean[0];
 
 
 ####Build table
 $Table = 
 "\(       
-\begin{array}{cccc}
-@dat[0] &  @dat[1] & @dat[2] & @dat[3] 
+\begin{array}{c|cccccc}
+\text{Section1}: & @s1[0] &  @s1[1] & @s1[2] & @s1[3] & @s1[4] & @s1[5] \\ 
+\hline
+\text{Section2}: & @s2[0] &  @s2[1] & @s2[2] & @s2[3] & @s2[4] & @s2[5]
 \end{array}
 \)"
 ;
@@ -71,95 +76,35 @@ $Table =
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-Inflation rate percentages in a small country for the past four years have been:
+A data set has course grades for students registered in two sections of a statistics course, taught by different instructors. Course grades for a sample of six students from each section are:
+$BR
 $BR
 $BCENTER
 $Table
 $ECENTER
-$BBOLD(a) $EBOLD Use the geometric mean to find the average annual rate (in percent) of inflation. Round your answer to two decimal places.  \{  ans_rule(7) \} 
+$BR
+Give answers to the following to two decimal places:
 $BR
 $BR
-$BBOLD(b) $EBOLD If this rate of inflation continued, how many years would be required for prices to double? Round off your answer to two decimal places. (Note that you should NOT use the rounded answer in (a) for use in (b).) \{  ans_rule(7) \} 
+$BBOLD(a) $EBOLD  Find the mean of the sample for Section 1.  \{  ans_rule(7) \} 
+$BR
+$BR
+$BBOLD(b) $EBOLD Find the mean of the sample for Section 2.  \{  ans_rule(7) \} 
 END_TEXT
 
 #########################################################
 ## Answers evaluation (Required)
-ANS( num_cmp($q1ans, tol=> 0.03) );
-ANS( num_cmp($q2ans, tol=> 0.03) );
+ANS( num_cmp($q1ans, tol=> 0.01) );
+ANS( num_cmp($q2ans, tol=> 0.01) );
 
 
 #########################################################
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-$BBOLD (a) $EBOLD Due to compounding of interest the appropriate average here is not the usual sense of arithmetic averaging-- as used when finding the mean of a set of numbers-- but rather an average of geometrical type. Consider four inflation rates @dat[0], @dat[1], @dat[2], @dat[3] (in percent) compounding over the four years. The inflation factor would therefore be 
+$BBOLD (a) $EBOLD The mean is found by adding the scores and dividing the total by six, in this case being $q1ans. 
 $BR
 $BR
-$BCENTER
-\( 
-(1+ @dat[0]/100) \times ( 1+ @dat[1]/100 ) \times ( 1+ @dat[2]/100 )  \times
-(1+@dat[3]/100).   
-\)
-$ECENTER
-$BR
-$BR
-The 4 th root of this value, 
-$BR
-$BR
-$BCENTER
-\(
-( (1+ @dat[0]/100) \times ( 1+ @dat[1]/100 ) \times ( 1+ @dat[2]/100 )  \times
-(1+@dat[3]/100) )^{1/4}
-\)
-$ECENTER
-$BR
-$BR
-can be taken as the mean inflation factor across the four time periods. Hence an average rate over the whole period could sensibly be defined by
-$BR
-$BR
-$BCENTER
-\(
-1+ r_{ave}= ( (1+ @dat[0]/100) \times ( 1+ @dat[1]/100 ) \times ( 1+ @dat[2]/100 )  \times (1+@dat[3]/100) )^{1/4}
-\)
-$ECENTER
-$BR
-$BR
-implying
-$BR
-$BR
-$BCENTER
-\(
-r_{ave}=( (1+ @dat[0]/100) \times ( 1+ @dat[1]/100 ) \times ( 1+ @dat[2]/100 )  \times
-(1+@dat[3]/100) )^{1/4}-1.
-\)
-$ECENTER
-$BR
-$BR
-In this case, as a percentage the geometric mean is \( 100 \times r_{ave} \)=$q1ans. 
-$BR
-$BR
-$BBOLD (b) $EBOLD We seek the number of years \( n \) such that 
-$BR
-$BR
-$BCENTER
-\(
-\left( 1+r_{ave} \right) ^{n}=2.
-\)
-$ECENTER
-$BR
-$BR
-Taking logarithms, this suggests
-$BR
-$BR
-$BCENTER
-\(
-n=\frac{\log \left( 2 \right) }{ \log \left( 1+r_{ave} \right) }= $q2ans.
-\)
-$ECENTER
-
+$BBOLD (b) $EBOLD The mean is found by adding the scores and dividing the total by six, in this case being $q2ans.
 END_SOLUTION
-
-COMMENT('This problem requires WeBWorK integration of R statistical software.
-See the WeBWorK wiki for documentation.');
-
 ENDDOCUMENT();
