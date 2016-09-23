@@ -1,13 +1,13 @@
 #########################################################
-##KEYWORDS('History of statistics', 'Canada', 'identify first official statistician of Canada')
+##KEYWORDS('Exploratory data analysis',  'types of data', 'identify whether a numerical ## variable is discrete or continuous')
 # DESCRIPTION
 ## DBsubject('Statistics')
-## DBchapter('xxx')
-## DBsection('xxx')
+## DBchapter('Exploratory data analysis/descriptive statistics')
+## DBsection('Classifying data')
 ## Date('2015/06/07')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')
-## level('1')
+## level('2')
 
 #########################################################
 DOCUMENT();
@@ -20,43 +20,45 @@ loadMacros(
   "parserMultiAnswer.pl",
   "RserveClient.pl",
   "answerHints.pl",
-  "PGcourse.pl",
+  "PGcourse.pl"
 );
 
-$gans="Jean Talon"; 
-$gq1= "John F. Kennedy";
-$gq2="Elton John";
-$gq3="Sir John A. MacDonald";
-$gq4="Jean Chretien";
+$gans="Mode of travel to university (bus, car, bike or walk)"; 
+$gq1= "Grade Point Average (GPA)";
+$gq2="Number of Economics courses";
+$gq3="Age (in years)";
+$gq4="Number of hours of study per week";
 
+$mc1 = new_multiple_choice();
 
-$mc1 = new_multiple_choice( );
+$mc1 -> qa( "Below is a list of variables from an annual survey of university students. Variables may be classified as either numerical or categorical. Which variable is categorical?", $gans);
 
-$mc1 -> qa( "Canada's first official statistician is recognized as:" , $gans);
-
-$mc1 -> extra($gq1, $gq2, $gq3, $gq4);
+$mc1 -> extra(
+    $gq1, 
+    $gq2,
+    $gq3,
+    $gq4,
+);
 
 #########################################################
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
 $PAR
-$PAR
 \{ $mc1->print_q() \}
 $BR
 \{ $mc1->print_a() \}
+$BR
 END_TEXT
 
 #########################################################
 ## Answers evaluation (Required)
-
-ANS( radio_cmp( $mc1 -> correct_ans( ) ) );
-
+ANS(radio_cmp($mc1->correct_ans()) );
 
 #########################################################
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-The correct answer is $gans.
+The answer is mode of travel to university (bus, car, bike or walk).
 END_SOLUTION
 ENDDOCUMENT();
