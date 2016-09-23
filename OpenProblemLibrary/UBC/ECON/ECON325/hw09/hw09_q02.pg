@@ -1,13 +1,12 @@
 #########################################################
+##KEYWORDS('Statistical inference', 'Confidence interval for a percentage', 'estimate a population percentage given a sample count', 'find an approximate 95% confidence interval for a population percentage')
 # DESCRIPTION
-## DBsubject(Statistics)
-## DBchapter(Confidence intervals)
-## DBsection(One sample proportion)
-## Date(2015/05/26)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
-## KEYWORDS('Statistical inference', 'Confidence interval for a percentage', 'estimate a population percentage given a sample count', 'find an approximate 95% confidence interval for a population percentage')
+## DBsubject('Statistics')
+## DBchapter('Confidence intervals')
+## DBsection('One sample proportion')
+## Date('2015/05/26')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -158,8 +157,4 @@ $nP}},  100\hat{p}+1.96\times 100\sqrt{\frac{\hat{p}\left( 1-\hat{p}
 $BR
 END_SOLUTION
 #########################################################
-
-COMMENT('This problem requires WeBWorK integration of R statistical software.
-See the WeBWorK wiki for documentation.');
-
 ENDDOCUMENT();
