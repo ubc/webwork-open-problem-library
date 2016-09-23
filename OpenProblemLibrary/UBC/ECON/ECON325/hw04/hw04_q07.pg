@@ -1,16 +1,12 @@
 #########################################################
-##KEYWORDS('Random variables'; 'bivariate distributions, marginals,
-##covariance'; 'find a marginal distribution from a joint discrete distribution,
-##find a conditional probability from a joint discrete distribution, find the
-##marginal expectations and covariance'.) 
+##KEYWORDS( 'Random variables'; 'bivariate distributions') 
 # DESCRIPTION
-## DBsubject(Probability)
-## DBchapter(Several variables)
-## DBsection(Joint distribution)
-## Date(2015/07/08)
-## Institution(University of British Columbia)
-## Author(Nelson Chen)
-## Level(3)
+## DBsubject('Probability')
+## DBchapter('Several Variables')
+## DBsection('Joint distribution')
+## Date('2015/07/08')
+## Author('Nelson Chen')
+## Institution('University of British Columbia')
 ## level('3')
 
 #########################################################
@@ -304,7 +300,7 @@ Cov(X, Y) = E((X- E(X))(Y- E(Y)))=E(XY)-E(X)E(Y).
 \)
 $ECENTER
 $BR
-The second form above can be the easier to apply in practice, and requires ÃÂfinding the distribution of \(XY\). In this case we see
+The second form above can be the easier to apply in practice, and requires finding the distribution of \(XY\). In this case we see
 $BR
 $BR
 $BCENTER
