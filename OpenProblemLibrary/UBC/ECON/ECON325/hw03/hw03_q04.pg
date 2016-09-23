@@ -1,13 +1,13 @@
 #########################################################
-##KEYWORDS('Combinatorics'; 'find number of permutations of a subset of objects both within groupings.')
+##KEYWORDS('Probability'; 'combinatorics'; 'find number of permutations'; 'find the probability of a single permutation')
 # DESCRIPTION
-## DBsubject('Combinatorics')
-## DBchapter('Counting')
-## DBsection('Permutations')
-## Date('2015/07/05')
+## DBsubject('Probability')
+## DBchapter('Sample Space')
+## DBsection('Probability: direct computation, inclusion/exclusion')
+## Date('2015/07/03')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')
-## level('3')
+## level('2')
 
 #########################################################
 DOCUMENT();
@@ -41,57 +41,51 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 rserve_eval("set.seed($seed)"); ## can not combine with the rest
 
 @x=rserve_eval('
-x <- sample(3:5, 1)
-');
-
-@y=rserve_eval('
-y <- sample(2:5, 1)
-');
-
-@z=rserve_eval('
-z <- sample(2:5, 1)
+x <- sample(3:8, 1)
 ');
 
 @q1=rserve_eval('
-6*factorial(x)*factorial(y)*factorial(z)
+factorial(x) 
 ');
 
 @q2=rserve_eval('
-factorial(y)*factorial(x+z+1)
+round(1/factorial(x), 2)
 ');
 
 $q1ans = @q1[0];
 $q2ans = @q2[0];
 
+
 #########################################################
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-The following books must be arranged on a shelf: @x[0] different math books, @y[0] different economics books, and @z[0] different English books. How many different arrangements are possible if:
+A city engineering department is planning improvements to @x[0] traffic intersections. All intersections are of equal importance. The chief
+engineer is asked to list the intersections in the order that the work will
+be carried out. Answer the following questions, rounding your answers to two decimal places where appropriate.
 $BR
 $BR
-$BBOLD(a) $EBOLD the books in each particular subject must all stand together? 
-\{ans_rule(7) \} 
+$BBOLD(a) $EBOLD How many different orderings are possible? \{  ans_rule(7) \} 
 $BR
 $BR
-$BBOLD(b) $EBOLD the economics books must stand together? \{ans_rule(7) \} 
+$BBOLD(b) $EBOLD A city tax-payer guesses at the order of the traffic improvements. What is the probability that this guess will turn out to be correct?
+Round off your answer to four decimal places.  \{  ans_rule(7) \} 
 END_TEXT
 
 #########################################################
 ## Answers evaluation (Required)
 ANS( num_cmp($q1ans) );
-ANS( num_cmp($q2ans) );
+ANS( num_cmp($q2ans, tol=> 0.02) );
 
 
 #########################################################
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-$BBOLD (a) $EBOLD The books are arranged in three sets by subject, and there are
-3! = 6 ways to arrange the three sets. Within the math books, there are @x[0]! possible orderings. Similarly for the economics books there are @y[0]! orderings and the English books have @z[0]! orderings. In total then there are \(6 \times @x[0]! \times @y[0]! \times @z[0]! =@q1[0] \) possible ordering. 
+$BBOLD (a) $EBOLD There are @x[0]!= @q1[0] different ways the @x[0] intersections can be listed in order.
+
 $BR
 $BR
-$BBOLD (b) $EBOLD The @y[0] economics books can be arranged in @y[0]! ways. Think of this set as a single book, arranged with the other @x[0]+@z[0] books, having (@x[0] + @z[0] + 1)! possible arrangements. In total then there are 
-\( @y[0]! \times (@x[0] + @z[0] + 1)! = @q2[0] \) arrangements.
+$BBOLD (b) $EBOLD Assuming all orderings are equally likely, the chance of selecting any single one is 1/ @x[0]!= @q2[0]. 
 END_SOLUTION
 ENDDOCUMENT();

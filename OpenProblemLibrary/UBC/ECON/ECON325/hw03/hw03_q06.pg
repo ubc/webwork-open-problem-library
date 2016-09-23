@@ -1,13 +1,13 @@
 #########################################################
-##KEYWORDS('Combinatorics'; 'find number of combinations of a subset of objects.')
+##KEYWORDS('Combinatorics'; 'find number of permutations of a subset of objects both with and without replacement')
 # DESCRIPTION
-## DBsubject('Combinatorics')
-## DBchapter('Counting')
-## DBsection('Combinations')
+## DBsubject('Combinatorics')
+## DBchapter('Counting')
+## DBsection('Permutations')
 ## Date('2015/07/05')
 ## Author('Nelson Chen')
 ## Institution('University of British Columbia')
-## level('2')
+## level('3')
 
 #########################################################
 DOCUMENT();
@@ -41,19 +41,15 @@ $seed = $seed * 62 + $nums{$_} foreach split(//, substr($hash, -5, 5));
 rserve_eval("set.seed($seed)"); ## can not combine with the rest
 
 @x=rserve_eval('
-x <- sample(5:12, 1)
-');
-
-@y=rserve_eval('
-y <- sample(4:11, 1)
+x <- sample(3:7, 1)
 ');
 
 @q1=rserve_eval('
-choose(x, 3)*choose(y, 2)
+factorial(9)/factorial(9-x)
 ');
 
 @q2=rserve_eval('
-choose(x-1, 2)*choose(y, 2)
+9^x
 ');
 
 $q1ans = @q1[0];
@@ -63,14 +59,13 @@ $q2ans = @q2[0];
 ## Main Text: where all text goes (Required)
 Context()->texStrings;
 BEGIN_TEXT
-A committee of 3 economists and 2 mathematicians must be formed from @x[0] economists (one of these economists is a Nobel prize winner) and @y[0] mathematicians. In how many ways can this be done if
+Consider forming @x[0] digit numbers from the digits 1, 2, 3, 4, 5, 6, 7, 8, and 9. Answer the following questions, rounding your answers to two decimal places.
 $BR
 $BR
-$BBOLD(a) $EBOLD any mathematician and economist can be selected? 
-\{ans_rule(7) \} 
+$BBOLD(a) $EBOLD How many numbers can be formed if repetitions are not allowed? \{  ans_rule(7) \} 
 $BR
 $BR
-$BBOLD(b) $EBOLD the Nobel prize winning economist must be on the committee? \{ans_rule(7) \} 
+$BBOLD(b) $EBOLD  How many numbers can be formed if repetitions are allowed?  \{  ans_rule(7) \} 
 END_TEXT
 
 #########################################################
@@ -83,10 +78,11 @@ ANS( num_cmp($q2ans) );
 ## Solution (Optional but recommended)
 Context()->texStrings;
 BEGIN_SOLUTION
-$BBOLD (a) $EBOLD The three economists can be chosen in \( \binom{@x[0]}{3} \) ways, and the two mathematicians can be selected in \( \binom{@y[0]}{2} \) ways. In total then there are \(  \binom{@x[0]}{3} \times \binom{@y[0]}{2} \) possibilities.   
+$BBOLD (a) $EBOLD Consider the @x[0] digits to be selected. The first may be selected in 9 ways. The second may be selected in 8 ways, so the  first two digits can chosen in 72 ways. Continuing in this fashion, the @x[0] digits can be found in
+\( 9 \times 8 \times \ldots \times (10-@x[0])=@q1[0] \) ways. 
 $BR
 $BR
-$BBOLD (b) $EBOLD The Nobel prize winner must be one of the three economists,
-leaving selecting the other two in  \( \binom{@x[0]-1}{2} \) possible ways. The mathematicians can be chosen in \( \binom{@y[0]}{2} \) as in (a). Hence the number of possibilities is  \(  \binom{@x[0]-1}{2} \times \binom{@y[0]}{2} \).   
+$BBOLD (b) $EBOLD When replacement is allowed, we have 9 choices for each digit,
+hence the number of choices is \(9^@x[0]= @q2[0]\). 
 END_SOLUTION
 ENDDOCUMENT();
