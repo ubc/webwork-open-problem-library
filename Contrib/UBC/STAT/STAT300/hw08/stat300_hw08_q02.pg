@@ -209,8 +209,13 @@ is fitted to the data via R, a summary of the model fit is given below:
 $BR
 $BR
 \(
-\text{Call:} \\
-\text{lm(formula = WeightGain ~ Dose + I(Dose^2))} \\
+\text{lm(formula = WeightGain ~ Dose + I(Dose^2))}
+\)
+$BR
+$BR
+$BCENTER
+\(
+\\
 \text{Residuals} \\
 \begin{array}{c c c c c}
 \text{Min} & \text{1Q} & \text{Median} & \text{3Q} & \text{Max} \\
@@ -218,6 +223,12 @@ $BR
 \end{array}
 \\
 \\
+\)
+$ECENTER
+$BR
+$BR
+$BCENTER
+\(
 \text{Coefficients}\\
 \begin{array}{l r r r r l}
 & \text{Estimate} & \text{Std. Error} & \text{t value} & \text{Pr(>|t|)} &  \\
@@ -226,14 +237,29 @@ $BR
 \text{I(Dose^2)} & $b_est[2] & @b_stderr[2] & @b_tval[2] & @b_prt[2] & @b_stars[2] \\
 \end{array}
 \\
+\)
+$ECENTER
+$BCENTER
+\(
 \text{- }\text{- }\text{- }
 \\
 \text{Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1} \\
 \\
-\text{Residual standard error: } $b_rse \text{ on } $b_df \text{ degrees of freedom} \\
+\)
+$ECENTER
+$BR
+$BR
+$BCENTER
+\(
+\text{Residual standard error: } $b_rse \text{ on } $b_df \text{ degrees of freedom, } \\
 \text{Multiple R-squared: } $b_rsq \text{, Adjusted R-squared: } $b_arsq \\
+\)
+$ECENTER
+$BCENTER
+\(
 \text{F-statistic: } $b_fstat \text{ on } $b_df1 \text{ and } $b_df2 \text{ DF, p-value: } $b_pval
 \)
+$ECENTER
 $BR
 $BR
 Assuming the above model is a good fit for the data, estimate the mean weight gain (in g) of the rats in the control group (those that received no aconiazide). Give your answer to two decimal places.
