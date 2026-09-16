@@ -114,7 +114,7 @@ giving the following data.
 
 END_TEXT
 BEGIN_PGML
-[$array]
+[$array]*
 END_PGML
 BEGIN_TEXT
 

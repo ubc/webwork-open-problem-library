@@ -91,7 +91,7 @@ This question continues the context and data of Question 1.
 
 END_TEXT
 BEGIN_PGML
-[$array]
+[$array]*
 END_PGML
 BEGIN_TEXT
 
